@@ -69,4 +69,5 @@ yarn-error.log
 .yarn-integrity
 
 /*.js
+!jest.config.js
 #!index.js
