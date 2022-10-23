@@ -8,6 +8,8 @@
     "url": "git://github.com/cosmicjs/gatsby-source-cosmic.git"
   },
   "scripts": {
+    "lint": "eslint src",
+    "lint.fix": "eslint --fix src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo \"No build script setup\""
   },
@@ -16,5 +18,10 @@
     "gatsby-plugin"
   ],
   "author": "Kyle Gill <kyle.robert.gill@gmail.com>",
-  "license": "0BSD"
+  "license": "0BSD",
+  "devDependencies": {
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
 }
