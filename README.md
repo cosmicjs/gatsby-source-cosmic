@@ -1,4 +1,5 @@
 # Gatsby Source for Cosmic
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 Source plugin for fetching data into [Gatsby](https://www.gatsbyjs.org) from [Cosmic](https://cosmicjs.com). Cosmic offers a [Headless CMS](https://cosmicjs.com/headless-cms) for your Gatsby website.
 
