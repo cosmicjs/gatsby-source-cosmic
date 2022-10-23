@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-plugin",
+  "name": "gatsby-source-cosmic",
   "version": "2.0.0",
   "description": "Gatsby Source Plugin for building websites using Cosmic JS as a data source",
   "main": "index.js",
@@ -12,7 +12,8 @@
     "lint": "eslint src",
     "lint.fix": "eslint --fix src",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"No build script setup\""
+    "build": "babel src --out-dir . --copy-files",
+    "watch": "babel -w src --out-dir . --copy-files"
   },
   "keywords": [
     "gatsby",
@@ -20,6 +21,9 @@
   ],
   "license": "0BSD",
   "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
+    "babel-preset-gatsby-package": "^2.24.0",
     "commitizen": "^4.2.5",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.26.0",
@@ -31,5 +35,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "dependencies": {}
 }
