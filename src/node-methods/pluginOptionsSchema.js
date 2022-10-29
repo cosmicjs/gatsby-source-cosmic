@@ -9,6 +9,7 @@ const pluginOptionsSchema = ({ Joi }) => Joi.object({
     .description('Your Cosmic API read key.'),
   objectTypes: Joi.array()
     .items(Joi.string())
+    .default([])
     // TODO: reword after adding object type support
     .description('The type slugs of the object types you want to fetch from your Cosmic Bucket.'),
   limit: Joi.number()
