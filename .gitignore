@@ -68,6 +68,4 @@ yarn-error.log
 # Yarn Integrity file
 .yarn-integrity
 
-/*.js
-!jest.config.js
-#!index.js
+dist/
