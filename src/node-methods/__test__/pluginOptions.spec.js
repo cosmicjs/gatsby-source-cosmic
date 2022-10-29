@@ -1,5 +1,5 @@
 import { testPluginOptionsSchema } from 'gatsby-plugin-utils';
-import { pluginOptionsSchema } from '../gatsby-node';
+import pluginOptionsSchema from '../pluginOptionsSchema';
 
 describe('pluginOptionsSchema', () => {
   it('should validate correct options', async () => {
