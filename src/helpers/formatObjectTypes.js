@@ -3,8 +3,9 @@ import Cosmic from 'cosmicjs';
 const api = Cosmic();
 
 // TODO: Add tests.
-
-const checkObjectTypes = async ({ reporter }, { bucketSlug, readKey, objectTypes }) => {
+const formatObjectTypes = async ({ reporter }, {
+  bucketSlug, readKey, objectTypes, limit,
+}) => {
   const bucket = api.bucket({
     slug: bucketSlug,
     read_key: readKey,
@@ -30,7 +31,7 @@ const checkObjectTypes = async ({ reporter }, { bucketSlug, readKey, objectTypes
   objectTypes.forEach((typeConfig) => {
     const typeSlug = typeof typeConfig === 'string' ? typeConfig : typeConfig.slug;
     if (fetchedTypeSlugs.includes(typeSlug)) {
-      validObjectTypes.push(typeSlug);
+      validObjectTypes.push(typeConfig);
     } else {
       invalidObjectTypes.push(typeSlug);
     }
@@ -41,7 +42,17 @@ const checkObjectTypes = async ({ reporter }, { bucketSlug, readKey, objectTypes
     reporter.warn(`The following object types were not found in your Cosmic bucket:\n\n\t- ${invalidObjectTypes.join(',\n\t- ')}\n\nTHESE OBJECT TYPES WILL BE IGNORED.`);
   }
 
-  return validObjectTypes;
+  // Transform all objects into valid config objects.
+  const formattedObjectTypes = validObjectTypes.map((typeConfig) => {
+    // Create a config object if a string was passed.
+    const modifiedTypeConfig = typeof typeConfig === 'string' ? { slug: typeConfig } : typeConfig;
+    // Set the default limit if none was specified.
+    if (!modifiedTypeConfig.limit) modifiedTypeConfig.limit = limit;
+    // TODO: Other default config options?
+    return modifiedTypeConfig;
+  });
+
+  return formattedObjectTypes;
 };
 
-export default checkObjectTypes;
+export default formatObjectTypes;

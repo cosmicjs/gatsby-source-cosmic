@@ -1,7 +1,7 @@
 import fetchObjects from './fetchObjects';
-import checkObjectTypes from './checkObjectTypes';
+import formatObjectTypes from './formatObjectTypes';
 
 export {
   fetchObjects,
-  checkObjectTypes,
+  formatObjectTypes,
 };

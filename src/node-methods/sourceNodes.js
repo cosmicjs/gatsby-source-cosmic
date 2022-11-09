@@ -1,14 +1,12 @@
-import { checkObjectTypes, fetchObjects } from '../helpers';
+import { formatObjectTypes, fetchObjects } from '../helpers';
 
 const sourceNodes = async (node, options) => {
   console.log('options', options);
   const internalOptions = options;
 
-  internalOptions.objectTypes = await checkObjectTypes(node, internalOptions);
-  // TODO: WIP
-  const objects = await fetchObjects(node, internalOptions);
+  internalOptions.objectTypes = await formatObjectTypes(node, internalOptions);
 
-  console.log('objectTypes', internalOptions);
+  const objectsWithData = await fetchObjects(node, internalOptions);
 };
 
 export default sourceNodes;
