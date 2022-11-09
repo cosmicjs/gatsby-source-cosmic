@@ -44,6 +44,7 @@
   "dependencies": {
     "async": "^3.2.4",
     "cosmicjs": "^4.2.10",
-    "gatsby-plugin-utils": "^3.18.0"
+    "gatsby-plugin-utils": "^3.18.0",
+    "lodash": "^4.17.21"
   }
 }

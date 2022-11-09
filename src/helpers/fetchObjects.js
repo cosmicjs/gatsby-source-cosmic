@@ -18,6 +18,7 @@ const fetchObjects = async (
     async (objectType) => {
       try {
         // TODO: Add support for pagination fetching.
+        // TODO: Add Fetching progress logging.
         const { objects } = await bucket.objects
           .find({
             // TODO: Add support for querying from object type config.
@@ -25,7 +26,6 @@ const fetchObjects = async (
           })
           .limit(objectType.limit);
         reporter.info(`Fetched ${objects.length} objects for type ${objectType.slug}.`);
-        console.log('objects', objects);
         return {
           ...objectType,
           objects,
