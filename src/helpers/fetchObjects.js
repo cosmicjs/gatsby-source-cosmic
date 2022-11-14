@@ -1,5 +1,6 @@
 import Cosmic from 'cosmicjs';
 import async from 'async';
+import { createCosmicFetch, calculateRemainingSkips } from './fetchObjectHelpers';
 
 const fetchObjects = async (
   { reporter },
@@ -16,25 +17,45 @@ const fetchObjects = async (
   const fetchedObjects = await async.mapSeries(
     objectTypes,
     async (objectType) => {
+      const cosmicFetch = createCosmicFetch(objectType, bucket);
+      let objects = [];
+      let initialCallResults = {};
+
+      // Make first call to fetch objects.
       try {
-        // TODO: Add support for pagination fetching.
-        // TODO: Add Fetching progress logging.
-        const { objects } = await bucket.objects
-          .find({
-            // TODO: Add support for querying from object type config.
-            type: objectType.slug,
-          })
-          .limit(objectType.limit);
-        reporter.info(`Fetched ${objects.length} objects for type ${objectType.slug}.`);
-        return {
-          ...objectType,
-          objects,
-        };
+        initialCallResults = await cosmicFetch(0);
+        objects = objects.concat(initialCallResults.objects);
       } catch (error) {
-        // TODO: Improve error handling & logging.
-        reporter.error(`Error fetching ${objectType.slug}: `, error);
-        return [];
+        // TODO: Improve error handling.
+        reporter.panic(error);
       }
+
+      // TODO: Add debug mode logging.
+      if (initialCallResults.total > objectType.limit) {
+        // If there are more objects than the limit, fetch them all.
+        const skipArray = calculateRemainingSkips(initialCallResults.total, objectType.limit);
+        const remainingResults = await async.mapSeries(skipArray, async (skip) => {
+          try {
+            const result = await cosmicFetch(skip);
+            return result;
+          } catch (error) {
+            // TODO: Improve error handling.
+            reporter.panic(error);
+          }
+          // this should never happen
+          return null;
+        });
+
+        const remainingObjects = remainingResults.flatMap((result) => result.objects);
+        objects = objects.concat(remainingObjects);
+      }
+
+      reporter.info(`Fetched ${objects.length} objects of type ${objectType.slug}.`);
+
+      return {
+        ...objectType,
+        objects,
+      };
     },
   );
 

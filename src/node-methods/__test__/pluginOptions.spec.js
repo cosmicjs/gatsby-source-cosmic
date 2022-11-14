@@ -56,7 +56,7 @@ describe('pluginOptionsSchema', () => {
     ]);
   });
 
-  it('should require objectTypes to be an array of strings', async () => {
+  it('should require objectTypes to be an array of strings or objects', async () => {
     const options = {
       bucketSlug: 'fakeBucketSlug',
       readKey: 'fakeReadKey',
@@ -67,7 +67,22 @@ describe('pluginOptionsSchema', () => {
 
     expect(isValid).toBe(false);
     expect(errors).toEqual([
-      '"objectTypes[0]" must be a string',
+      '"objectTypes[0]" does not match any of the allowed types',
+    ]);
+  });
+
+  it('should require objectType objects to contain a slug', async () => {
+    const options = {
+      bucketSlug: 'fakeBucketSlug',
+      readKey: 'fakeReadKey',
+      objectTypes: [{}],
+    };
+
+    const { isValid, errors } = await testPluginOptionsSchema(pluginOptionsSchema, options);
+
+    expect(isValid).toBe(false);
+    expect(errors).toEqual([
+      '"objectTypes[0]" does not match any of the allowed types',
     ]);
   });
 

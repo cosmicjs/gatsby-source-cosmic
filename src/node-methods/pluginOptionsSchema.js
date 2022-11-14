@@ -8,10 +8,18 @@ const pluginOptionsSchema = ({ Joi }) => Joi.object({
     .required()
     .description('Your Cosmic API read key.'),
   objectTypes: Joi.array()
-    .items(Joi.string())
+    .items(
+      Joi.string(),
+      Joi.object({
+        slug: Joi.string().required().messages({
+          'any.required': 'Object type slug is required.',
+        }),
+        limit: Joi.number().default(100),
+      }),
+    )
     .default([])
     // TODO: reword after adding object type support
-    .description('The type slugs of the object types you want to fetch from your Cosmic Bucket.'),
+    .description('Fetch configurations for the object types you want to fetch from your Cosmic Bucket.'),
   limit: Joi.number()
     .default(500)
     .description('The number of objects to fetch per request.'),
