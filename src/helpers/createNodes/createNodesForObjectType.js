@@ -1,8 +1,8 @@
-import createTypeSlug from './createNodeTypeSlug';
+import createTypeSlug from '../createNodeTypeSlug';
 
 // NOTE: If we add relationships to the object types, we may need to modify this function.
 // TODO: Add media file node support.
-const createNodeObject = ({ createContentDigest, actions }, objectType) => {
+const createNodesForObjectType = ({ createContentDigest, actions }, objectType) => {
   const { createNode } = actions;
   const { slug, objects } = objectType;
 
@@ -23,4 +23,4 @@ const createNodeObject = ({ createContentDigest, actions }, objectType) => {
   }
 };
 
-export default createNodeObject;
+export default createNodesForObjectType;

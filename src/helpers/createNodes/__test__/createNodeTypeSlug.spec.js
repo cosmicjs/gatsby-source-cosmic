@@ -1,4 +1,4 @@
-import createNodeTypeSlug from '../createNodeTypeSlug';
+import { createNodeTypeSlug } from '../createNodeHelpers';
 
 describe('createNodeTypeSlug', () => {
   it('should create a CapitalCase slug', () => {

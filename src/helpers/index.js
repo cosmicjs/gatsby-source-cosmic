@@ -1,4 +1,4 @@
-import createNodesForObjectType from './createNodesForObjectType';
+import createNodesForObjectType from './createNodes';
 import createTypeSlug from './createNodeTypeSlug';
 import fetchObjects from './fetchObjects';
 import formatObjectTypes from './formatObjectTypes';
