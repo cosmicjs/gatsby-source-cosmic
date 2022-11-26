@@ -14,6 +14,20 @@ const pluginOptionsSchema = ({ Joi }) => Joi.object({
         slug: Joi.string().required().messages({
           'any.required': 'Object type slug is required.',
         }),
+        query: Joi.object(),
+        props: Joi.string(),
+        sort: Joi.string()
+          .valid(
+            'created_at',
+            '-created_at',
+            'modified_at',
+            '-modified_at',
+            'random',
+            'order',
+          )
+          .messages({
+            'any.valid': 'Sort must be one of.',
+          }),
         limit: Joi.number().default(100),
       }),
     )

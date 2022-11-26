@@ -100,4 +100,16 @@ describe('pluginOptionsSchema', () => {
       '"limit" must be a number',
     ]);
   });
+
+  it('should require a valid sort value', async () => {
+    const options = {
+      bucketSlug: 'fakeBucketSlug',
+      readKey: 'fakeReadKey',
+      sort: 'fakeSort',
+    };
+
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, options);
+
+    expect(isValid).toBe(false);
+  });
 });
