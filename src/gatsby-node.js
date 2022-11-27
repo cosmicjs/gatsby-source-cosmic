@@ -11,4 +11,14 @@
  *
  * See: https://www.gatsbyjs.com/docs/creating-a-local-plugin/#developing-a-local-plugin-that-is-outside-your-project
  */
-exports.onPreInit = () => console.log('Loaded gatsby-starter-plugin');
+import { pluginOptionsSchema } from './node-methods';
+import sourceNodes from './node-methods/sourceNodes';
+
+// TODO: Commenting this out for now,
+// we should add this in though once error logging levels are added.
+// exports.onPreInit = () => console.log('Loaded gatsby-starter-plugin');
+
+export {
+  pluginOptionsSchema,
+  sourceNodes,
+};

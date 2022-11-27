@@ -12,8 +12,10 @@
     "lint": "eslint src",
     "lint.fix": "eslint --fix src",
     "test": "jest",
-    "build": "babel src --out-dir . --copy-files",
-    "watch": "babel -w src --out-dir . --copy-files"
+    "makeDist": "mkdir -p dist && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cp ./LICENSE ./dist/LICENSE",
+    "build": "npm run makeDist && babel src --out-dir ./dist --copy-files --no-copy-ignored",
+    "watch": "npm run makeDist && babel -w src --out-dir ./dist --copy-files --no-copy-ignored",
+    "clean": "rm index.js gatsby-node.js"
   },
   "keywords": [
     "gatsby",
@@ -39,5 +41,10 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "async": "^3.2.4",
+    "cosmicjs": "^4.2.10",
+    "gatsby-plugin-utils": "^3.18.0",
+    "lodash": "^4.17.21"
+  }
 }
