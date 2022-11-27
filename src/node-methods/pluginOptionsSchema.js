@@ -33,7 +33,11 @@ const pluginOptionsSchema = ({ Joi }) => Joi.object({
         query: Joi.object({
           type: Joi.any().forbidden(),
         }).unknown().optional(),
-        props: Joi.string().optional(),
+        props: Joi.string().optional().custom((value) => {
+          // Check if comma separated string list of props contains id.
+          if (value.split(',').includes('id')) return value;
+          throw new Error('props must include "id".');
+        }, 'props must contain id'),
         limit: Joi.number().optional().integer().min(1),
         depth: Joi.number().optional().integer().min(0),
         use_cache: Joi.boolean().optional(),

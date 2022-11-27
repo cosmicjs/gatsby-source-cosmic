@@ -15,7 +15,7 @@ describe('pluginOptionsSchema', () => {
         {
           slug: 'authors',
           limit: 100,
-          props: 'slug,title,content',
+          props: 'id,slug,title,content',
         },
         { slug: 'tags', query: { prop: 'value' } },
         { slug: 'categories', sort: '-created_at' },
@@ -366,6 +366,32 @@ describe('pluginOptionsSchema', () => {
 
     expect(isValid).toBe(false);
     expect(errors).toEqual(['"objectTypes[1].props" must be a string']);
+  });
+
+  it('should not allow objectType props to be empty', async () => {
+    const options = {
+      bucketSlug: 'fakeBucketSlug',
+      readKey: 'fakeReadKey',
+      objectTypes: ['test', { slug: 'test', props: '' }],
+    };
+
+    const { isValid, errors } = await testPluginOptionsSchema(pluginOptionsSchema, options);
+
+    expect(isValid).toBe(false);
+    expect(errors).toEqual(['"objectTypes[1].props" is not allowed to be empty']);
+  });
+
+  it('should require objectType props to include an id', async () => {
+    const options = {
+      bucketSlug: 'fakeBucketSlug',
+      readKey: 'fakeReadKey',
+      objectTypes: ['test', { slug: 'test', props: 'title' }],
+    };
+
+    const { isValid, errors } = await testPluginOptionsSchema(pluginOptionsSchema, options);
+
+    expect(isValid).toBe(false);
+    expect(errors).toEqual(['"objectTypes[1].props" failed custom validation because props must include "id".']);
   });
 
   it('should require objectType query to be an object', async () => {
