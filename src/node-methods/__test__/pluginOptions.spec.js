@@ -9,6 +9,7 @@ describe('pluginOptionsSchema', () => {
       limit: 500,
       sort: 'created_at',
       depth: 2,
+      status: 'published',
       objectTypes: [
         'posts',
         {
@@ -180,6 +181,22 @@ describe('pluginOptionsSchema', () => {
 
     expect(isValid).toBe(false);
     expect(errors).toEqual(['"sort" must be one of [created_at, -created_at, modified_at, -modified_at, random, order]']);
+  });
+
+  // ----
+  // Property: sort (global)
+  // ----
+  it('should reject an invalid global status value', async () => {
+    const options = {
+      bucketSlug: 'fakeBucketSlug',
+      readKey: 'fakeReadKey',
+      status: 'fakeStatus',
+    };
+
+    const { isValid, errors } = await testPluginOptionsSchema(pluginOptionsSchema, options);
+
+    expect(isValid).toBe(false);
+    expect(errors).toEqual(['"status" must be one of [published, any]']);
   });
 
   // ----

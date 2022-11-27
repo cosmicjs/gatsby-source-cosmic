@@ -21,6 +21,10 @@ const pluginOptionsSchema = ({ Joi }) => Joi.object({
       'order',
     )
     .only(),
+  status: Joi.string().optional().allow(
+    'published',
+    'any',
+  ).only(),
   objectTypes: Joi.array().optional().items(
     Joi.alternatives().try(
       Joi.string().empty(),
