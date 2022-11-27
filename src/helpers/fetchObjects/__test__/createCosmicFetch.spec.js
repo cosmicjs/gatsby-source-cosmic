@@ -104,6 +104,16 @@ describe('createCosmicFetch', () => {
     expect(bucket.objects.limit).toHaveBeenCalledWith(10);
   });
 
+  it('should not call limit with a limit less than 1', async () => {
+    const bucket = { objects: new MockBucketObjects({}) };
+    const objectType = { slug: 'posts', limit: 0 };
+
+    await createCosmicFetch(objectType, bucket)(0);
+
+    expect(bucket.objects.find).toHaveBeenCalledWith({ type: 'posts' });
+    expect(bucket.objects.limit).not.toHaveBeenCalled();
+  });
+
   // depth
   it('should call depth with the depth from the object config', async () => {
     const bucket = { objects: new MockBucketObjects({}) };
@@ -115,6 +125,16 @@ describe('createCosmicFetch', () => {
     expect(bucket.objects.depth).toHaveBeenCalledWith(1);
   });
 
+  it('should call depth with a value of 0', async () => {
+    const bucket = { objects: new MockBucketObjects({}) };
+    const objectType = { slug: 'posts', depth: 0 };
+
+    await createCosmicFetch(objectType, bucket)(0);
+
+    expect(bucket.objects.find).toHaveBeenCalledWith({ type: 'posts' });
+    expect(bucket.objects.depth).toHaveBeenCalledWith(0);
+  });
+
   // useCache
   it('should call useCache with the use_cache from the object config', async () => {
     const bucket = { objects: new MockBucketObjects({}) };
@@ -124,6 +144,16 @@ describe('createCosmicFetch', () => {
 
     expect(bucket.objects.find).toHaveBeenCalledWith({ type: 'posts' });
     expect(bucket.objects.useCache).toHaveBeenCalledWith(true);
+  });
+
+  it('should call useCache with a value of false', async () => {
+    const bucket = { objects: new MockBucketObjects({}) };
+    const objectType = { slug: 'posts', use_cache: false };
+
+    await createCosmicFetch(objectType, bucket)(0);
+
+    expect(bucket.objects.find).toHaveBeenCalledWith({ type: 'posts' });
+    expect(bucket.objects.useCache).toHaveBeenCalledWith(false);
   });
 
   // sort
