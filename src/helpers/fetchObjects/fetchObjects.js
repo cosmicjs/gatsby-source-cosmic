@@ -31,12 +31,14 @@ const fetchObjects = async (
       }
 
       // TODO: Add debug mode logging.
+      let callCount = 1;
       if (initialCallResults.total > objectType.limit) {
         // If there are more objects than the limit, fetch them all.
         const skipArray = calculateRemainingSkips(initialCallResults.total, objectType.limit);
         const remainingResults = await async.mapSeries(skipArray, async (skip) => {
           try {
             const result = await cosmicFetch(skip);
+            callCount += 1;
             return result;
           } catch (error) {
             // TODO: Improve error handling.
@@ -50,7 +52,9 @@ const fetchObjects = async (
         objects = objects.concat(remainingObjects);
       }
 
-      reporter.info(`Fetched ${objects.length} objects of type ${objectType.slug}.`);
+      reporter.info(
+        `Fetched ${objects.length} objects of type ${objectType.slug} in ${callCount} calls with limit ${objectType.limit}.`,
+      );
 
       return {
         ...objectType,
