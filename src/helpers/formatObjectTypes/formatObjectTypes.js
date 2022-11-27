@@ -6,9 +6,8 @@ import {
 
 const api = Cosmic();
 
-const formatObjectTypes = async ({ reporter }, {
-  bucketSlug, readKey, objectTypes, limit,
-}) => {
+const formatObjectTypes = async ({ reporter }, options) => {
+  const { bucketSlug, readKey, objectTypes } = options;
   const invalidObjectTypes = [];
   const validObjectTypes = [];
   const fetchedTypeSlugs = [];
@@ -45,7 +44,7 @@ const formatObjectTypes = async ({ reporter }, {
     reporter.warn(`The following object types were not found in your Cosmic bucket:\n\n\t- ${invalidObjectTypes.join(',\n\t- ')}\n\nTHESE OBJECT TYPES WILL BE IGNORED.`);
   }
 
-  return createValidConfigs(validObjectTypes, limit);
+  return createValidConfigs(validObjectTypes, options);
 };
 
 export default formatObjectTypes;
