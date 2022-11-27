@@ -40,6 +40,11 @@ class MockBucketObjects {
     return this;
   });
 
+  showMetafields = jest.fn(() => {
+    this.called.showMetafields = true;
+    return this;
+  });
+
   skip = jest.fn(() => {
     this.called.skip = true;
     return this;
@@ -176,6 +181,17 @@ describe('createCosmicFetch', () => {
 
     expect(bucket.objects.find).toHaveBeenCalledWith({ type: 'posts' });
     expect(bucket.objects.status).toHaveBeenCalledWith('test');
+  });
+
+  // show_metafields
+  it('should call showMetafields with the show_metafields from the object config', async () => {
+    const bucket = { objects: new MockBucketObjects({}) };
+    const objectType = { slug: 'posts', show_metafields: true };
+
+    await createCosmicFetch(objectType, bucket)(0);
+
+    expect(bucket.objects.find).toHaveBeenCalledWith({ type: 'posts' });
+    expect(bucket.objects.showMetafields).toHaveBeenCalledWith(true);
   });
 
   // skip

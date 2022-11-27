@@ -41,6 +41,7 @@ const pluginOptionsSchema = ({ Joi }) => Joi.object({
         limit: Joi.number().optional().integer().min(1),
         depth: Joi.number().optional().integer().min(0),
         use_cache: Joi.boolean().optional(),
+        show_metafields: Joi.boolean().optional(),
         sort: Joi.string().optional().valid(
           'created_at',
           '-created_at',
