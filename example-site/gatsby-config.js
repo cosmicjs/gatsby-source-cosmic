@@ -20,11 +20,7 @@ module.exports = {
         objectTypes: [
           {
             slug: 'pages',
-            depth: 0,
-            limit: 2,
-            use_cache: true,
-            status: 'any',
-            props: 'id,slug,title,content',
+            show_metafields: true,
           },
           'authors',
         ],

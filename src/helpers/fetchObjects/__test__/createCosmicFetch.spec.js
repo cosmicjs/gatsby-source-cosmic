@@ -53,7 +53,9 @@ class MockBucketObjects {
 
 describe('createCosmicFetch', () => {
   it('should return a curried function', () => {
-    const bucket = {};
+    const bucket = {
+      objects: new MockBucketObjects({}),
+    };
     const objectType = { slug: 'posts' };
 
     const result = createCosmicFetch(objectType, bucket);
