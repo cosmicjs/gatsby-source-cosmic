@@ -26,7 +26,9 @@ const pluginOptionsSchema = ({ Joi }) => Joi.object({
       Joi.string().empty(),
       Joi.object({
         slug: Joi.string().required().empty(),
-        query: Joi.object().optional(),
+        query: Joi.object({
+          type: Joi.any().forbidden(),
+        }).unknown().optional(),
         props: Joi.string().optional(),
         limit: Joi.number().optional().integer().min(1),
         depth: Joi.number().optional().integer().min(0),

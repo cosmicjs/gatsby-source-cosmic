@@ -286,6 +286,19 @@ describe('pluginOptionsSchema', () => {
     expect(errors).toEqual(['"objectTypes[1].slug" is not allowed to be empty']);
   });
 
+  it('should not allow objectType queries to contain type slugs', async () => {
+    const options = {
+      bucketSlug: 'fakeBucketSlug',
+      readKey: 'fakeReadKey',
+      objectTypes: ['test', { slug: 'test', query: { type: 'test' } }],
+    };
+
+    const { isValid, errors } = await testPluginOptionsSchema(pluginOptionsSchema, options);
+
+    expect(isValid).toBe(false);
+    expect(errors).toEqual(['"objectTypes[1].query.type" is not allowed']);
+  });
+
   it('should require objectType limit to be a number', async () => {
     const options = {
       bucketSlug: 'fakeBucketSlug',
