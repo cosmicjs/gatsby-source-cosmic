@@ -1,6 +1,6 @@
 import Cosmic from 'cosmicjs';
 import async from 'async';
-import { createCosmicFetch, calculateRemainingSkips } from './fetchObjectHelpers';
+import { createCosmicFetch, calculateRemainingSkips, handleCosmicError } from './fetchObjectHelpers';
 
 const fetchObjects = async (
   { reporter },
@@ -26,8 +26,7 @@ const fetchObjects = async (
         initialCallResults = await cosmicFetch(0);
         objects = objects.concat(initialCallResults.objects);
       } catch (error) {
-        // TODO: Improve error handling.
-        reporter.panic(error);
+        handleCosmicError(error, reporter, objectType);
       }
 
       // TODO: Add debug mode logging.
@@ -41,8 +40,7 @@ const fetchObjects = async (
             callCount += 1;
             return result;
           } catch (error) {
-            // TODO: Improve error handling.
-            reporter.panic(error);
+            handleCosmicError(error, reporter, objectType);
           }
           // this should never happen
           return null;
@@ -52,9 +50,10 @@ const fetchObjects = async (
         objects = objects.concat(remainingObjects);
       }
 
-      reporter.info(
-        `Fetched ${objects.length} objects of type ${objectType.slug} in ${callCount} calls with limit ${objectType.limit}.`,
-      );
+      const message = `Fetched ${objects.length} objects of type ${objectType.slug} in ${callCount} call(s) with limit ${objectType.limit}.`;
+
+      if (objects.length === 0) reporter.warn(message);
+      else reporter.info(message);
 
       return {
         ...objectType,
