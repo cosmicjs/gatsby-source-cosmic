@@ -2,20 +2,23 @@
   "name": "gatsby-source-cosmic",
   "version": "2.0.0",
   "description": "Gatsby Source Plugin for building websites using Cosmic JS as a data source",
-  "main": "index.js",
+  "main": "gatsby-node.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/cosmicjs/gatsby-source-cosmic.git"
   },
+  "files": [
+    "dist/*",
+    "gatsby-node.js"
+  ],
   "scripts": {
     "prepare": "husky install",
+    "babel": "babel",
     "lint": "eslint src",
     "lint.fix": "eslint --fix src",
-    "test": "jest",
-    "makeDist": "mkdir -p dist && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cp ./LICENSE ./dist/LICENSE",
-    "build": "npm run makeDist && babel src --out-dir ./dist --copy-files --no-copy-ignored",
-    "watch": "npm run makeDist && babel -w src --out-dir ./dist --copy-files --no-copy-ignored",
-    "clean": "rm index.js gatsby-node.js"
+    "test": "jest --verbose",
+    "build": "./build.sh",
+    "watch": "./watch.sh"
   },
   "keywords": [
     "gatsby",

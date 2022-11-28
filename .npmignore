@@ -22,14 +22,16 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
+# Tarballs
+gatsby-source-cosmic-*.tgz
 
 # Non-bundled files
-src
 .husky
+.vscode
 .eslintrc.json
 coverage
 example-site
-gatsby-source-cosmic-*.tgz
-package
-jest.config.js
-setup.js
+.eslintrc.json
+.babelrc
+build.sh
+jest.*.js
