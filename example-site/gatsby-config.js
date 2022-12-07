@@ -14,13 +14,15 @@ module.exports = {
       options: {
         bucketSlug: process.env.COSMIC_BUCKET_SLUG,
         readKey: process.env.COSMIC_READ_KEY,
+        limit: 1,
+        depth: 3,
+        use_cache: false,
         objectTypes: [
           {
             slug: 'pages',
-            limit: 1
+            show_metafields: true,
           },
           'authors',
-          'badType',
         ],
       }
     },

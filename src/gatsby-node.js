@@ -16,7 +16,7 @@ import sourceNodes from './node-methods/sourceNodes';
 
 // TODO: Commenting this out for now,
 // we should add this in though once error logging levels are added.
-// exports.onPreInit = () => console.log('Loaded gatsby-starter-plugin');
+// exports.onPreInit = () => console.log('Loaded gatsby-source-cosmic');
 
 export {
   pluginOptionsSchema,

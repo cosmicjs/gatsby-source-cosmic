@@ -32,3 +32,4 @@ example-site
 gatsby-source-cosmic-*.tgz
 package
 jest.config.js
+setup.js

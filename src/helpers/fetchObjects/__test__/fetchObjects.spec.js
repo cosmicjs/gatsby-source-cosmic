@@ -4,6 +4,7 @@ import * as Helpers from '../fetchObjectHelpers';
 describe('fetchObjects', () => {
   const reporter = {
     info: jest.fn(),
+    warn: jest.fn(),
     panic: jest.fn(),
   };
 
@@ -107,7 +108,7 @@ describe('fetchObjects', () => {
     expect(mockCreateCosmicFetch).toHaveBeenCalledTimes(1);
     expect(cosmicCallMock).toHaveBeenCalledTimes(1);
     expect(cosmicCallMock).toHaveBeenCalledWith(0);
-    expect(reporter.info).toHaveBeenCalledTimes(1);
+    expect(reporter.warn).toHaveBeenCalledTimes(1);
     expect(reporter.panic).toHaveBeenCalledTimes(1);
   });
 });
