@@ -35,11 +35,25 @@ jobs:
       - run:
           name: "lint"
           command: "npm run test"
+  build:
+    docker:
+      - image: cimg/node:14.18.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      - run:
+          name: "build"
+          command: "npm run build"
+      - save_cache:
+          key: v1-build-{{ .BuildNum }}-branch-{{ .Branch }}
+          paths: 
+            - dist          
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  test:
+  test-suit:
     jobs:
       - init
       - lint:
@@ -48,3 +62,16 @@ workflows:
       - test:
           requires:
             - init
+  build:
+    jobs:
+      - init
+      - lint:
+          requires:
+            - init
+      - test:
+          requires:
+            - init
+      - build:
+          requires:
+            - lint
+            - test
