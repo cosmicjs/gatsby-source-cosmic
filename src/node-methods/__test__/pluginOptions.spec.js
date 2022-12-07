@@ -472,17 +472,4 @@ describe('pluginOptionsSchema', () => {
     expect(isValid).toBe(false);
     expect(errors).toEqual(['"objectTypes[1].use_cache" must be a boolean']);
   });
-
-  it('should require objectType show_metafields to be a boolean', async () => {
-    const options = {
-      bucketSlug: 'fakeBucketSlug',
-      readKey: 'fakeReadKey',
-      objectTypes: ['test', { slug: 'test', show_metafields: 'test' }],
-    };
-
-    const { isValid, errors } = await testPluginOptionsSchema(pluginOptionsSchema, options);
-
-    expect(isValid).toBe(false);
-    expect(errors).toEqual(['"objectTypes[1].show_metafields" must be a boolean']);
-  });
 });

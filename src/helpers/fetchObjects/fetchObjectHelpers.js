@@ -21,7 +21,6 @@ const createCosmicFetch = (objectType, bucket) => async (skip = 0) => {
   if (typeof objectType.use_cache === 'boolean') chainRequest.useCache(objectType.use_cache);
   if (typeof objectType.sort === 'string') chainRequest.sort(objectType.sort);
   if (typeof objectType.status === 'string') chainRequest.status(objectType.status);
-  if (typeof objectType.show_metafields === 'boolean') chainRequest.showMetafields(objectType.show_metafields);
   // console.log(chainRequest.endpoint);
   const result = await chainRequest.skip(skip);
 

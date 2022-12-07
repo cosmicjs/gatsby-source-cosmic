@@ -185,17 +185,6 @@ describe('createCosmicFetch', () => {
     expect(bucket.objects.status).toHaveBeenCalledWith('test');
   });
 
-  // show_metafields
-  it('should call showMetafields with the show_metafields from the object config', async () => {
-    const bucket = { objects: new MockBucketObjects({}) };
-    const objectType = { slug: 'posts', show_metafields: true };
-
-    await createCosmicFetch(objectType, bucket)(0);
-
-    expect(bucket.objects.find).toHaveBeenCalledWith({ type: 'posts' });
-    expect(bucket.objects.showMetafields).toHaveBeenCalledWith(true);
-  });
-
   // skip
   it('should call skip with the skip from the object config', async () => {
     const bucket = { objects: new MockBucketObjects({}) };
