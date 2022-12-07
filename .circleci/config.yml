@@ -48,21 +48,24 @@ jobs:
       - save_cache:
           key: v1-build-{{ .BuildNum }}-branch-{{ .Branch }}
           paths: 
-            - dist          
+            - dist
+  release:
+    docker:
+      - image: cimg/node:14.18.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-build-{{ .BuildNum }}-branch-{{ .Branch }}
+      - run:
+          name: "release"
+          command: "npx semantic-release --debug"     
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  test-suit:
-    jobs:
-      - init
-      - lint:
-          requires:
-            - init
-      - test:
-          requires:
-            - init
-  build:
+  test-build-approval-release:
     jobs:
       - init
       - lint:
@@ -75,3 +78,16 @@ workflows:
           requires:
             - lint
             - test
+          filters:
+            branches:
+              only:
+                - master
+                - /-prerelease$/
+                - /v[0-9]+\.(x|[0-9]+)/
+      - hold:
+          type: approval
+          requires:
+            - build
+      - release:
+          requires:
+            - build
