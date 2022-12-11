@@ -1,5 +1,5 @@
 import formatObjectTypes from '../formatObjectTypes';
-import * as Helpers from '../formatObjectTypeHelpers';
+import * as FetchTypes from '../fetchObjectTypes';
 
 describe('formatObjectTypes', () => {
   const reporter = {
@@ -8,7 +8,7 @@ describe('formatObjectTypes', () => {
   };
 
   it('should return an array of valid object type configs', async () => {
-    const mockFetchObjectTypes = jest.spyOn(Helpers, 'fetchObjectTypes').mockReturnValue([
+    const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockReturnValue([
       { slug: 'test1' },
       { slug: 'test2' },
       { slug: 'test3' },
@@ -32,7 +32,7 @@ describe('formatObjectTypes', () => {
   });
 
   it('should return an array of valid object type configs when none are specified in the config', async () => {
-    const mockFetchObjectTypes = jest.spyOn(Helpers, 'fetchObjectTypes').mockReturnValue([
+    const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockReturnValue([
       { slug: 'test1' },
       { slug: 'test2' },
       { slug: 'test3' },
@@ -56,7 +56,7 @@ describe('formatObjectTypes', () => {
   });
 
   it('should return an array of valid object type configs when mixed config types are specified', async () => {
-    const mockFetchObjectTypes = jest.spyOn(Helpers, 'fetchObjectTypes').mockReturnValue([
+    const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockReturnValue([
       { slug: 'test1' },
       { slug: 'test2' },
       { slug: 'test3' },
@@ -80,7 +80,7 @@ describe('formatObjectTypes', () => {
   });
 
   it('should return only the object types specified in the config', async () => {
-    const mockFetchObjectTypes = jest.spyOn(Helpers, 'fetchObjectTypes').mockReturnValue([
+    const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockReturnValue([
       { slug: 'test1' },
       { slug: 'test2' },
       { slug: 'test3' },
@@ -103,7 +103,7 @@ describe('formatObjectTypes', () => {
   });
 
   it('should report a warning if an object type is specified in the config that does not exist', async () => {
-    const mockFetchObjectTypes = jest.spyOn(Helpers, 'fetchObjectTypes').mockReturnValue([
+    const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockReturnValue([
       { slug: 'test1' },
       { slug: 'test2' },
       { slug: 'test3' },
@@ -125,7 +125,7 @@ describe('formatObjectTypes', () => {
   });
 
   it('should warn the developer of specific objects that do not exist', async () => {
-    const mockFetchObjectTypes = jest.spyOn(Helpers, 'fetchObjectTypes').mockReturnValue([
+    const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockReturnValue([
       { slug: 'test1' },
       { slug: 'test2' },
       { slug: 'test3' },
@@ -146,7 +146,7 @@ describe('formatObjectTypes', () => {
   });
 
   it('should panic if fetchObjectTypes throws an error', async () => {
-    const mockFetchObjectTypes = jest.spyOn(Helpers, 'fetchObjectTypes').mockImplementation(() => {
+    const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockImplementation(() => {
       throw new Error('test');
     });
 

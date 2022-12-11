@@ -1,6 +1,8 @@
 import Cosmic from 'cosmicjs';
 import async from 'async';
-import { createCosmicFetch, calculateRemainingSkips, handleCosmicError } from './fetchObjectHelpers';
+import createCosmicFetch from './createCosmicFetch';
+import handleCosmicError from './handleCosmicError';
+import calculateRemainingSkips from './calculateRemainingSkips';
 
 const fetchObjects = async (
   { reporter },

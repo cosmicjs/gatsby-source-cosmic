@@ -1,8 +1,6 @@
 import Cosmic from 'cosmicjs';
-import {
-  createValidConfigs,
-  fetchObjectTypes,
-} from './formatObjectTypeHelpers';
+import createTypeConfigs from './createTypeConfigs';
+import fetchObjectTypes from './fetchObjectTypes';
 
 const api = Cosmic();
 
@@ -44,7 +42,7 @@ const formatObjectTypes = async ({ reporter }, options) => {
     reporter.warn(`The following object types were not found in your Cosmic bucket:\n\n\t- ${invalidObjectTypes.join(',\n\t- ')}\n\nTHESE OBJECT TYPES WILL BE IGNORED.`);
   }
 
-  return createValidConfigs(validObjectTypes, options);
+  return createTypeConfigs(validObjectTypes, options);
 };
 
 export default formatObjectTypes;

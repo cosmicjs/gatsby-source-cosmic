@@ -1,4 +1,4 @@
-import { calculateRemainingSkips } from '../fetchObjectHelpers';
+import calculateRemainingSkips from '../calculateRemainingSkips';
 
 describe('calculateRemainingSkips', () => {
   it('should return an array of skip numbers', () => {

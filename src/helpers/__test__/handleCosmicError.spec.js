@@ -1,4 +1,4 @@
-import { handleCosmicError } from '../fetchObjectHelpers';
+import handleCosmicError from '../handleCosmicError';
 
 describe('handleCosmicError', () => {
   const reporter = {

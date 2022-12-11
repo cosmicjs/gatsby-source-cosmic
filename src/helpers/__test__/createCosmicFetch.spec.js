@@ -1,4 +1,4 @@
-import { createCosmicFetch } from '../fetchObjectHelpers';
+import createCosmicFetch from '../createCosmicFetch';
 
 class MockBucketObjects {
   constructor(called) {

@@ -1,5 +1,5 @@
 import fetchObjects from '../fetchObjects';
-import * as Helpers from '../fetchObjectHelpers';
+import * as CreateFetch from '../createCosmicFetch';
 
 describe('fetchObjects', () => {
   const reporter = {
@@ -13,7 +13,7 @@ describe('fetchObjects', () => {
       total: 2,
       objects: [{ id: 1 }, { id: 2 }],
     }));
-    const mockCreateCosmicFetch = jest.spyOn(Helpers, 'createCosmicFetch').mockReturnValue(cosmicCallMock);
+    const mockCreateCosmicFetch = jest.spyOn(CreateFetch, 'default').mockReturnValue(cosmicCallMock);
 
     const fetchedObjects = await fetchObjects(
       { reporter },
@@ -39,7 +39,7 @@ describe('fetchObjects', () => {
         total: 2,
         objects: [{ id: 2 }],
       }));
-    const mockCreateCosmicFetch = jest.spyOn(Helpers, 'createCosmicFetch').mockReturnValue(cosmicCallMock);
+    const mockCreateCosmicFetch = jest.spyOn(CreateFetch, 'default').mockReturnValue(cosmicCallMock);
 
     const fetchedObjects = await fetchObjects(
       { reporter },
@@ -61,7 +61,7 @@ describe('fetchObjects', () => {
         objects: [{ id: 1 }],
       }))
       .mockImplementationOnce(() => Promise.reject(new Error({ message: 'test' })));
-    const mockCreateCosmicFetch = jest.spyOn(Helpers, 'createCosmicFetch').mockReturnValue(cosmicCallMock);
+    const mockCreateCosmicFetch = jest.spyOn(CreateFetch, 'default').mockReturnValue(cosmicCallMock);
 
     await fetchObjects(
       { reporter },
@@ -93,7 +93,7 @@ describe('fetchObjects', () => {
         total: 2,
         objects: [{ id: 4 }],
       }));
-    const mockCreateCosmicFetch = jest.spyOn(Helpers, 'createCosmicFetch').mockReturnValue(cosmicCallMock);
+    const mockCreateCosmicFetch = jest.spyOn(CreateFetch, 'default').mockReturnValue(cosmicCallMock);
 
     const fetchedObjects = await fetchObjects(
       { reporter },
@@ -119,7 +119,7 @@ describe('fetchObjects', () => {
 
   it('should call reporter.panic when there is an error', async () => {
     const cosmicCallMock = jest.fn(() => Promise.reject(new Error('test')));
-    const mockCreateCosmicFetch = jest.spyOn(Helpers, 'createCosmicFetch').mockReturnValue(cosmicCallMock);
+    const mockCreateCosmicFetch = jest.spyOn(CreateFetch, 'default').mockReturnValue(cosmicCallMock);
 
     await fetchObjects(
       { reporter },

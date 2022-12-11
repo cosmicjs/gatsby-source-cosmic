@@ -20,9 +20,9 @@ module.exports = {
         objectTypes: [
           {
             slug: 'pages',
-            show_metafields: true,
           },
           'authors',
+          'image-pages',
         ],
       }
     },

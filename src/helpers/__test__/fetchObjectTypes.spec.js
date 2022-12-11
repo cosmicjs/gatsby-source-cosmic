@@ -1,4 +1,4 @@
-import { fetchObjectTypes } from '../formatObjectTypeHelpers';
+import fetchObjectTypes from '../fetchObjectTypes';
 
 describe('fetchObjectTypes', () => {
   it('should return an array of object types', async () => {

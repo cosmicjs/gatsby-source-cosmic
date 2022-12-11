@@ -1,4 +1,5 @@
-import { createNodesForObjectType, formatObjectTypes, fetchObjects } from '../helpers';
+import { formatObjectTypes, fetchObjects } from '../../helpers';
+import createNodesForObjectType from './createNodesForObjectType';
 
 const sourceNodes = async (lifecycleFunctions, options) => {
   // TODO: Add option logging for debugging mode.

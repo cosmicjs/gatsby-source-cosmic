@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
-import { createValidConfigs } from '../formatObjectTypeHelpers';
+import createTypeConfigs from '../createTypeConfigs';
 
-describe('createValidConfigs', () => {
+describe('createTypeConfigs', () => {
   it('should return an array of config objects', () => {
     const objectTypes = ['posts', 'pages'];
     const limit = 10;
 
-    const result = createValidConfigs(objectTypes, { limit });
+    const result = createTypeConfigs(objectTypes, { limit });
 
     expect(result).toBeInstanceOf(Array);
     expect(result[0]).toBeInstanceOf(Object);
@@ -18,7 +18,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', limit: 20 }];
     const limit = 10;
 
-    const result = createValidConfigs(objectTypes, { limit });
+    const result = createTypeConfigs(objectTypes, { limit });
 
     expect(result).toEqual([
       { slug: 'posts', limit: 10 },
@@ -33,7 +33,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const limit = 10;
 
-    const result = createValidConfigs(objectTypes, { limit });
+    const result = createTypeConfigs(objectTypes, { limit });
 
     expect(result).toEqual([
       { slug: 'posts', limit: 10 },
@@ -45,7 +45,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', limit: 20 }];
     const limit = 10;
 
-    const result = createValidConfigs(objectTypes, { limit });
+    const result = createTypeConfigs(objectTypes, { limit });
 
     expect(result).toEqual([
       { slug: 'posts', limit: 10 },
@@ -60,7 +60,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const depth = 1;
 
-    const result = createValidConfigs(objectTypes, { depth });
+    const result = createTypeConfigs(objectTypes, { depth });
 
     expect(result).toEqual([
       { slug: 'posts', depth: 1 },
@@ -72,7 +72,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', depth: 2 }];
     const depth = 1;
 
-    const result = createValidConfigs(objectTypes, { depth });
+    const result = createTypeConfigs(objectTypes, { depth });
 
     expect(result).toEqual([
       { slug: 'posts', depth: 1 },
@@ -87,7 +87,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const use_cache = false;
 
-    const result = createValidConfigs(objectTypes, { use_cache });
+    const result = createTypeConfigs(objectTypes, { use_cache });
 
     expect(result).toEqual([
       { slug: 'posts', use_cache: false },
@@ -99,7 +99,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', use_cache: true }];
     const use_cache = false;
 
-    const result = createValidConfigs(objectTypes, { use_cache });
+    const result = createTypeConfigs(objectTypes, { use_cache });
 
     expect(result).toEqual([
       { slug: 'posts', use_cache: false },
@@ -114,7 +114,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const sort = 'created_at';
 
-    const result = createValidConfigs(objectTypes, { sort });
+    const result = createTypeConfigs(objectTypes, { sort });
 
     expect(result).toEqual([
       { slug: 'posts', sort: 'created_at' },
@@ -126,7 +126,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', sort: '-created_at' }];
     const sort = 'created_at';
 
-    const result = createValidConfigs(objectTypes, { sort });
+    const result = createTypeConfigs(objectTypes, { sort });
 
     expect(result).toEqual([
       { slug: 'posts', sort: 'created_at' },
@@ -141,7 +141,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const status = 'published';
 
-    const result = createValidConfigs(objectTypes, { status });
+    const result = createTypeConfigs(objectTypes, { status });
 
     expect(result).toEqual([
       { slug: 'posts', status: 'published' },
@@ -153,7 +153,7 @@ describe('createValidConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', status: 'draft' }];
     const status = 'published';
 
-    const result = createValidConfigs(objectTypes, { status });
+    const result = createTypeConfigs(objectTypes, { status });
 
     expect(result).toEqual([
       { slug: 'posts', status: 'published' },

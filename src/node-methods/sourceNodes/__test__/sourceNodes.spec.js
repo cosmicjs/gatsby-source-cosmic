@@ -1,5 +1,5 @@
 import sourceNodes from '../sourceNodes';
-import * as helpers from '../../helpers';
+import * as helpers from '../../../helpers';
 
 describe('sourceNodes', () => {
   it('should create nodes for each object type', async () => {
