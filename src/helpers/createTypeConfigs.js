@@ -1,7 +1,13 @@
 // Transform all objects into valid config objects.
-const createTypeConfigs = (objectTypes, options) => objectTypes.map((typeConfig) => {
+const createTypeConfigs = (
+  options,
+  objectTypes,
+  typeMetaFields,
+) => objectTypes.map((typeConfig) => {
   // Create a config object if a string was passed.
-  const modifiedTypeConfig = typeof typeConfig === 'string' ? { slug: typeConfig } : typeConfig;
+  const modifiedTypeConfig = typeof typeConfig === 'string'
+    ? { slug: typeConfig, metafields: typeMetaFields[typeConfig] }
+    : { ...typeConfig, metafields: typeMetaFields[typeConfig.slug] };
 
   // Set the default options if not specified on the object config.
   if (typeof modifiedTypeConfig.limit === 'undefined') modifiedTypeConfig.limit = options.limit;

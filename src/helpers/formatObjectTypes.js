@@ -10,6 +10,7 @@ const formatObjectTypes = async (nodeAPIHelpers, options) => {
   const invalidObjectTypes = [];
   const validObjectTypes = [];
   const fetchedTypeSlugs = [];
+  const fetchedTypeMetafields = {};
   const bucket = api.bucket({
     slug: bucketSlug,
     read_key: readKey,
@@ -17,6 +18,9 @@ const formatObjectTypes = async (nodeAPIHelpers, options) => {
   try {
     const result = await fetchObjectTypes(nodeAPIHelpers, options, bucket);
     fetchedTypeSlugs.push(...result.map(({ slug }) => slug));
+    result.forEach((type) => {
+      fetchedTypeMetafields[type.slug] = type.metafields;
+    });
   } catch (error) {
     // TODO: Improve error handling & logging.
     reporter.panic('Unable to fetch object types from Cosmic.', error);
@@ -43,7 +47,7 @@ const formatObjectTypes = async (nodeAPIHelpers, options) => {
     reporter.warn(`The following object types were not found in your Cosmic bucket:\n\n\t- ${invalidObjectTypes.join(',\n\t- ')}\n\nTHESE OBJECT TYPES WILL BE IGNORED.`);
   }
 
-  return createTypeConfigs(validObjectTypes, options);
+  return createTypeConfigs(options, validObjectTypes, fetchedTypeMetafields);
 };
 
 export default formatObjectTypes;

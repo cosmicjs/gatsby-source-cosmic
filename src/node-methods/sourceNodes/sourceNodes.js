@@ -7,7 +7,6 @@ import {
 import createNodesForObjectType from './createNodesForObjectType';
 
 const sourceNodes = async (nodeAPIHelpers, options) => {
-  console.log('sourceNodes');
   // TODO: Add option logging for debugging mode.
   const internalOptions = options;
 

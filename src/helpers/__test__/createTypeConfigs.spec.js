@@ -6,7 +6,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const limit = 10;
 
-    const result = createTypeConfigs(objectTypes, { limit });
+    const result = createTypeConfigs({ limit }, objectTypes, {});
 
     expect(result).toBeInstanceOf(Array);
     expect(result[0]).toBeInstanceOf(Object);
@@ -18,11 +18,25 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', limit: 20 }];
     const limit = 10;
 
-    const result = createTypeConfigs(objectTypes, { limit });
+    const result = createTypeConfigs({ limit }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', limit: 10 },
       { slug: 'pages', limit: 20 },
+    ]);
+  });
+
+  it('should add metafields to the config object', () => {
+    const objectTypes = ['posts'];
+    const limit = 10;
+    const metafields = {
+      posts: 'test',
+    };
+
+    const result = createTypeConfigs({ limit }, objectTypes, metafields);
+
+    expect(result).toEqual([
+      { slug: 'posts', limit: 10, metafields: 'test' },
     ]);
   });
 
@@ -33,7 +47,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const limit = 10;
 
-    const result = createTypeConfigs(objectTypes, { limit });
+    const result = createTypeConfigs({ limit }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', limit: 10 },
@@ -45,7 +59,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', limit: 20 }];
     const limit = 10;
 
-    const result = createTypeConfigs(objectTypes, { limit });
+    const result = createTypeConfigs({ limit }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', limit: 10 },
@@ -60,7 +74,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const depth = 1;
 
-    const result = createTypeConfigs(objectTypes, { depth });
+    const result = createTypeConfigs({ depth }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', depth: 1 },
@@ -72,7 +86,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', depth: 2 }];
     const depth = 1;
 
-    const result = createTypeConfigs(objectTypes, { depth });
+    const result = createTypeConfigs({ depth }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', depth: 1 },
@@ -87,7 +101,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const use_cache = false;
 
-    const result = createTypeConfigs(objectTypes, { use_cache });
+    const result = createTypeConfigs({ use_cache }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', use_cache: false },
@@ -99,7 +113,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', use_cache: true }];
     const use_cache = false;
 
-    const result = createTypeConfigs(objectTypes, { use_cache });
+    const result = createTypeConfigs({ use_cache }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', use_cache: false },
@@ -114,7 +128,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const sort = 'created_at';
 
-    const result = createTypeConfigs(objectTypes, { sort });
+    const result = createTypeConfigs({ sort }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', sort: 'created_at' },
@@ -126,7 +140,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', sort: '-created_at' }];
     const sort = 'created_at';
 
-    const result = createTypeConfigs(objectTypes, { sort });
+    const result = createTypeConfigs({ sort }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', sort: 'created_at' },
@@ -141,7 +155,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', 'pages'];
     const status = 'published';
 
-    const result = createTypeConfigs(objectTypes, { status });
+    const result = createTypeConfigs({ status }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', status: 'published' },
@@ -153,7 +167,7 @@ describe('createTypeConfigs', () => {
     const objectTypes = ['posts', { slug: 'pages', status: 'draft' }];
     const status = 'published';
 
-    const result = createTypeConfigs(objectTypes, { status });
+    const result = createTypeConfigs({ status }, objectTypes, {});
 
     expect(result).toEqual([
       { slug: 'posts', status: 'published' },
