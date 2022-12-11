@@ -4,7 +4,8 @@ import fetchObjectTypes from './fetchObjectTypes';
 
 const api = Cosmic();
 
-const formatObjectTypes = async ({ reporter }, options) => {
+const formatObjectTypes = async (nodeAPIHelpers, options) => {
+  const { reporter } = nodeAPIHelpers;
   const { bucketSlug, readKey, objectTypes } = options;
   const invalidObjectTypes = [];
   const validObjectTypes = [];
@@ -14,7 +15,7 @@ const formatObjectTypes = async ({ reporter }, options) => {
     read_key: readKey,
   });
   try {
-    const result = await fetchObjectTypes(bucket);
+    const result = await fetchObjectTypes(nodeAPIHelpers, options, bucket);
     fetchedTypeSlugs.push(...result.map(({ slug }) => slug));
   } catch (error) {
     // TODO: Improve error handling & logging.
