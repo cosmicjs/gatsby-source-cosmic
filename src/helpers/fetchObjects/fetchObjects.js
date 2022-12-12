@@ -42,8 +42,8 @@ const fetchObjects = async (
           } catch (error) {
             handleCosmicError(error, reporter, objectType);
           }
-          // this should never happen
-          return null;
+          // this should never happen as panic should be called in the catch above
+          return { objects: [] };
         });
 
         const remainingObjects = remainingResults.flatMap((result) => result.objects);

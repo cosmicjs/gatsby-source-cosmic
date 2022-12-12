@@ -11,9 +11,7 @@
  *
  * See: https://www.gatsbyjs.com/docs/creating-a-local-plugin/#developing-a-local-plugin-that-is-outside-your-project
  */
-import { pluginOptionsSchema } from './node-methods';
-import sourceNodes from './node-methods/sourceNodes';
-
+import { sourceNodes, pluginOptionsSchema } from './node-methods';
 // TODO: Commenting this out for now,
 // we should add this in though once error logging levels are added.
 // exports.onPreInit = () => console.log('Loaded gatsby-source-cosmic');

@@ -1,0 +1,37 @@
+{
+  "branches": [
+    "+([0-9])?(.{+([0-9]),x}).x",
+    "master",
+    {
+      "name": "*-prerelease",
+      "prerelease": true
+    }
+  ],
+  "dryRun": true,
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    ["@semantic-release/changelog", {
+      "changelogFile": "CHANGELOG.md"
+    }],
+    ["@semantic-release/npm", {
+      "npmPublish": false,
+      "tarballDir": "tar"
+    }],
+    ["@semantic-release/github", {
+      "githubUrl": "https://github.com/cosmicjs/gatsby-source-cosmic.git",
+      "assets": [{
+        "name": "Tarball",
+        "path": "tar/*.tgz"
+        },
+        {
+          "name": "Tarball",
+          "path": "CHANGELOG.md"
+        },
+        {
+          "name": "Source Code",
+          "path": "src"
+        }]
+    }]
+  ]
+}

@@ -53,6 +53,27 @@ describe('fetchObjects', () => {
     expect(fetchedObjects).toEqual([{ slug: 'test', limit: 1, objects: [{ id: 1 }, { id: 2 }] }]);
   });
 
+  it('should panic if a paginated request fails', async () => {
+    const cosmicCallMock = jest.fn();
+    cosmicCallMock
+      .mockImplementationOnce(() => Promise.resolve({
+        total: 2,
+        objects: [{ id: 1 }],
+      }))
+      .mockImplementationOnce(() => Promise.reject(new Error({ message: 'test' })));
+    const mockCreateCosmicFetch = jest.spyOn(Helpers, 'createCosmicFetch').mockReturnValue(cosmicCallMock);
+
+    await fetchObjects(
+      { reporter },
+      { bucketSlug: 'test', readKey: 'test', objectTypes: [{ slug: 'test', limit: 1 }] },
+    );
+
+    expect(mockCreateCosmicFetch).toHaveBeenCalledTimes(1);
+    expect(cosmicCallMock).toHaveBeenCalledTimes(2);
+    expect(reporter.info).toHaveBeenCalledTimes(1);
+    expect(reporter.panic).toHaveBeenCalledTimes(1);
+  });
+
   it('should return fetched objects when there are more than the limit and multiple object types', async () => {
     const cosmicCallMock = jest.fn();
     cosmicCallMock

@@ -1,4 +1,5 @@
 {
   "presets": ["babel-preset-gatsby-package"],
-  "ignore": []
+  "sourceMaps": true,
+  "comments": false
 }

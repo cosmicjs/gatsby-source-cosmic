@@ -10,7 +10,7 @@ module.exports = {
   plugins: [
     {
       // Using local plugin resolution for testing
-      resolve: require.resolve(`../dist`),
+      resolve: require.resolve(`../`),
       options: {
         bucketSlug: process.env.COSMIC_BUCKET_SLUG,
         readKey: process.env.COSMIC_READ_KEY,
