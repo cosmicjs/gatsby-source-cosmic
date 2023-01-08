@@ -46,7 +46,6 @@ describe('sourceNodes', () => {
       internal: {
         type: 'CosmicjsTest',
         mediaType: 'text/html',
-        content: JSON.stringify({ id: 1 }),
         contentDigest: undefined,
       },
     });
@@ -57,7 +56,6 @@ describe('sourceNodes', () => {
       internal: {
         type: 'CosmicjsTest',
         mediaType: 'text/html',
-        content: JSON.stringify({ id: 2 }),
         contentDigest: undefined,
       },
     });
@@ -68,7 +66,6 @@ describe('sourceNodes', () => {
       internal: {
         type: 'CosmicjsTest2',
         mediaType: 'text/html',
-        content: JSON.stringify({ id: 3 }),
         contentDigest: undefined,
       },
     });

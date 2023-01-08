@@ -21,7 +21,6 @@ const createNodesForObjectType = ({ createContentDigest, actions, reporter }, ob
       internal: {
         type: createNodeTypeSlug(slug),
         mediaType: 'text/html',
-        content: JSON.stringify(object),
         contentDigest: createContentDigest(object),
       },
     };
