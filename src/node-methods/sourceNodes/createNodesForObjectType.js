@@ -1,4 +1,4 @@
-import { createNodeTypeSlug } from './createNodeHelpers';
+import { createNodeTypeSlug } from '../../helpers';
 
 // NOTE: If we add relationships to the object types, we may need to modify this function.
 // TODO: Add media file node support.

@@ -8,4 +8,4 @@ const createNodeTypeSlug = (slug) => {
 
 // Disable rule for now, as we may add more functions to this file in the future.
 // eslint-disable-next-line import/prefer-default-export
-export { createNodeTypeSlug };
+export default createNodeTypeSlug;
