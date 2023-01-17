@@ -18,13 +18,17 @@ module.exports = {
         depth: 3,
         use_cache: false,
         objectTypes: [
-          {
-            slug: 'pages',
-          },
-          'authors',
-          'image-pages',
+          // {
+          //   slug: 'pages',
+          // },
+          // 'authors',
+          // 'image-pages',
+          // 'every-types',
+          'dead-simple-image-pages',
         ],
       }
     },
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
   ],
 }

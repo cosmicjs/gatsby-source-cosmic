@@ -9,6 +9,10 @@ Most info here are things that I'm learning during research, but need to circle 
     - Should see what `activityTimer` does UI wise in the CLI
       - same with `createProgress`
   - [ ] Reformat the file structure
+  - [ ] Look into if special support is needed for the markdown field type
+    - https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark
+    - Search markdown gatsby
+  - [ ] Add experimental setting to replace empty strings with null while sourcing nodes.
 
 ## Gatsby Node Creation
   - The `touchNode` action seems like it would be something worth investigating for proper data caching. [Docs](https://www.gatsbyjs.com/docs/reference/config-files/actions/#touchNode), [Example Use](https://github.com/gatsbyjs/gatsby/blob/dc3d741260e057540ed1294558df78aa63126a8b/packages/gatsby-source-contentful/src/source-nodes.js#L62-L77)
