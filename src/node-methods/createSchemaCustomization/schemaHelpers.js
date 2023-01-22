@@ -1,12 +1,15 @@
+/* eslint-disable camelcase */
 import fs from 'fs-extra';
 import _ from 'lodash';
 import mime from 'mime-types';
 import { fetchRemoteFile } from 'gatsby-core-utils';
 import { md5 } from 'hash-wasm';
 import probe from 'probe-image-size';
+import axios from 'axios';
 // import { addRemoteFilePolyfillInterface } from 'gatsby-plugin-utils/polyfill-remote-file';
 import { generateImageData, getLowResolutionImageURL } from 'gatsby-plugin-image';
 import { getGatsbyImageFieldConfig, getGatsbyImageResolver } from 'gatsby-plugin-image/graphql-utils';
+import pluginSharp from 'gatsby-plugin-sharp';
 // import { getPluginOptions, doMergeDefaults } from 'gatsby-plugin-sharp/plugin-options';
 import {
   capitalizeFirstLetter,
@@ -44,13 +47,83 @@ const generateImageSource = (baseURL, width, height, format, fit, options) => {
     sourceObject.format = format;
   }
 
+  if (options && options.quality) {
+    src += `&q=${options.quality}`;
+    sourceObject.quality = options.quality;
+  }
+
   sourceObject.src = src;
   return sourceObject;
 };
 
+const fetchedDomColorImages = {};
+const inProgressDomColorImages = {};
+const getDominantColor = async (imageURL, cache) => {
+  const defaultColor = 'rgba(0,0,0,0.5)';
+  if (!imageURL) return defaultColor;
+
+  // Require the image to be coming from cosmic's imgix cdn
+  if (!imageURL.startsWith('https://imgix.cosmicjs.com')) return defaultColor;
+
+  // Attempt to get the dominant color from imgix
+  // TODO: We could also expose which color to use as a query setting
+  // https://docs.imgix.com/apis/rendering/color-palette/palette
+  try {
+    const results = await axios.get(`${imageURL}&palette=json`);
+    console.log('results', results);
+    const { dominant_colors } = results.data;
+    console.log('dominant_colors', dominant_colors);
+    if (dominant_colors && dominant_colors.vibrant_dark && dominant_colors.vibrant_dark.hex) {
+      fetchedDomColorImages[imageURL] = dominant_colors.vibrant_dark.hex;
+      return dominant_colors.vibrant_dark.hex;
+    }
+  } catch (e) {
+    console.warn('Could not get dominant color from imgix\nfalling back to sharp', e);
+  }
+
+  // Check if we already have the color return it
+  if (fetchedDomColorImages[imageURL]) return fetchedDomColorImages[imageURL];
+  // Check if we are already fetching the image and return the promise
+  if (inProgressDomColorImages[imageURL]) return inProgressDomColorImages[imageURL];
+
+  const fetchFile = async (url, directory) => {
+    const ext = mime.extension(mime.lookup(url.split('?')[0]));
+    const cacheKey = await md5(`${url}__DOMINANT_COLOR`);
+    const path = await fetchRemoteFile({
+      url,
+      directory,
+      ext,
+      cacheKey,
+    });
+    return path;
+  };
+
+  const imagePromise = fetchFile(imageURL, cache.directory);
+  inProgressDomColorImages[imageURL] = imagePromise;
+
+  return imagePromise.then((path) => {
+    // TODO: Has Own check
+    const color = pluginSharp.getDominantColor(path);
+    fetchedDomColorImages[imageURL] = color;
+    delete inProgressDomColorImages[imageURL];
+    return color;
+  }).catch((e) => {
+    // TODO: Use reporter instead of console.error
+    console.error(
+      '[gatsby-source-cosmic] Could not getDominantColor from image',
+      e,
+    );
+    return 'rgba(0,0,0,0.5)';
+  });
+};
+
+// ---------
+// TODO: This function could be rewritten to use imgix's BlurHash feature
+// We'd have to add in sharp directly, but it may be more performant than the gatsby method
+// Imgix BlurHash: https://docs.imgix.com/apis/rendering/format/fm#blurhash
+// Convert to Base64 w/Sharp: https://github.com/woltapp/blurhash/issues/43#issuecomment-759112713
 const fetchedBase64Images = {};
 const inProgressBase64Images = {};
-
 const getBase64Image = (imageURL, cache) => {
   if (!imageURL) return null;
 
@@ -65,7 +138,7 @@ const getBase64Image = (imageURL, cache) => {
   // Fetch the base64 image
   const fetchBase64 = async (url, directory) => {
     const ext = mime.extension(mime.lookup(imageURL.split('?')[0]));
-    const cacheKey = await md5(imageURL);
+    const cacheKey = await md5(`${url}__BASE64`);
 
     const path = await fetchRemoteFile({
       url,
@@ -131,6 +204,11 @@ const resolveGatsbyImageData = async (image, options, context, info, { cache }) 
     imageDataArgs.placeholderURL = await getBase64Image(lowRes.src, cache);
   }
 
+  if (options.placeholder === 'dominantColor') {
+    const medRes = generateImageSource(filename, 255);
+    imageDataArgs.backgroundColor = await getDominantColor(medRes.src, cache);
+  }
+
   const imageData = generateImageData(imageDataArgs);
 
   console.log('imageData', JSON.stringify(imageData, null, 2));
@@ -171,12 +249,13 @@ const buildCosmicImageType = async (nodeAPIHelpers) => {
       url: 'String!',
       imgix_url: 'String!',
       gatsbyImageData: getGatsbyImageFieldConfig(
-        async (...args) => resolveGatsbyImageData(...args, { cache: nodeAPIHelpers.cache }),
+        async (...args) => resolveGatsbyImageData(...args, nodeAPIHelpers),
         {
-          quality: 'String',
+          quality: 'Int',
         },
       ),
     },
+    interfaces: ['RemoteFile'],
   });
 
   return imageType;
