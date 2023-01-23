@@ -65,4 +65,9 @@ const getDominantColor = async (imageURL, cache) => {
   });
 };
 
+export {
+  fetchedDomColorImages,
+  inProgressDomColorImages,
+};
+
 export default getDominantColor;
