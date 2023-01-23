@@ -1,4 +1,4 @@
-### Type definitions saved at 2023-01-17T23:56:02.015Z ###
+### Type definitions saved at 2023-01-23T00:15:40.568Z ###
 
 enum RemoteFileFit {
   COVER
@@ -325,7 +325,7 @@ type CosmicjsDeadSimpleImagePagesMetadata {
   the_image: CosmicjsImage
 }
 
-type CosmicjsImage implements RemoteFile {
+type CosmicjsImage {
   url: String!
   imgix_url: String!
   gatsbyImageData(

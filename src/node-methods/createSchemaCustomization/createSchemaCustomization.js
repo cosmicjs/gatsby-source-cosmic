@@ -1,6 +1,7 @@
 import fs from 'fs';
-import { formatObjectTypes, createNodeTypeSlug } from '../../helpers';
-import createSchemaObjectForType, { buildCosmicImageType } from './schemaHelpers';
+import { formatObjectTypes } from '../../helpers';
+import createSchemaObjectForType from './createSchemaObjectForType';
+import buildCosmicImageType from './buildCosmicImageType';
 
 const createSchemaCustomization = async (nodeAPIHelpers, options) => {
   const internalOptions = options;
