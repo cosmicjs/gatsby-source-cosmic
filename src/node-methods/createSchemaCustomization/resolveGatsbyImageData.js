@@ -8,14 +8,17 @@ import generateImageSource from './generateImageSource';
 let hasShownTraceSVGWarning = false;
 const resolveGatsbyImageData = async (image, options, context, info, nodeAPIHelpers) => {
   const { reporter } = nodeAPIHelpers;
-  // Will need to check if file node is actually an image
+
+  if (!image || !image.imgix_url) {
+    reporter.warn('Image resolver called with invalid image');
+    return null;
+  }
 
   const filename = image.imgix_url;
 
   const meta = await probe(filename);
 
   const sourceMetadata = {
-    // format: mime.lookup(filename).split('/')[1] ,
     width: meta.width,
     height: meta.height,
     format: meta.type || mime.lookup(filename).split('/')[1],
@@ -51,8 +54,6 @@ const resolveGatsbyImageData = async (image, options, context, info, nodeAPIHelp
   }
 
   const imageData = generateImageData(imageDataArgs);
-
-  // console.log('imageData', JSON.stringify(imageData, null, 2));
 
   return imageData;
 };
