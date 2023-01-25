@@ -6,7 +6,8 @@ import getDominantColor from './getDominantColor';
 import generateImageSource from './generateImageSource';
 
 let hasShownTraceSVGWarning = false;
-const resolveGatsbyImageData = async (image, options, context, info, { cache }) => {
+const resolveGatsbyImageData = async (image, options, context, info, nodeAPIHelpers) => {
+  const { reporter } = nodeAPIHelpers;
   // Will need to check if file node is actually an image
 
   const filename = image.imgix_url;
@@ -31,8 +32,7 @@ const resolveGatsbyImageData = async (image, options, context, info, { cache }) 
 
   if (options.placeholder === 'tracedSVG') {
     if (!hasShownTraceSVGWarning) {
-      // TODO: Use reporter.warn instead if possible
-      console.warn(
+      reporter.warn(
         '"TRACED_SVG" placeholder argument value is no longer supported, using "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/',
       );
       hasShownTraceSVGWarning = true;
@@ -42,12 +42,12 @@ const resolveGatsbyImageData = async (image, options, context, info, { cache }) 
 
   if (options.placeholder === 'blurred') {
     const lowRes = generateImageSource(filename, 20);
-    imageDataArgs.placeholderURL = await getBase64Image(lowRes.src, cache);
+    imageDataArgs.placeholderURL = await getBase64Image(lowRes.src, nodeAPIHelpers);
   }
 
   if (options.placeholder === 'dominantColor') {
     const medRes = generateImageSource(filename, 255);
-    imageDataArgs.backgroundColor = await getDominantColor(medRes.src, cache);
+    imageDataArgs.backgroundColor = await getDominantColor(medRes.src, nodeAPIHelpers);
   }
 
   const imageData = generateImageData(imageDataArgs);

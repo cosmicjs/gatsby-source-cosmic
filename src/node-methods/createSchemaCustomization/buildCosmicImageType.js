@@ -3,31 +3,7 @@ import resolveGatsbyImageData from './resolveGatsbyImageData';
 
 const buildCosmicImageType = async (nodeAPIHelpers) => {
   const { schema } = nodeAPIHelpers;
-  // const imageType = addRemoteFilePolyfillInterface(
-  //   schema.buildObjectType({
-  //     name: 'CosmicjsImage',
-  //     fields: {
-  //       url: 'String!',
-  //       imgix_url: 'String!',
-  //       mimeType: 'String!',
-  //       gatsbyImageData: getGatsbyImageResolver(resolveGatsbyImageData),
-  //       // localFile: {
-  //       //   type: 'File',
-  //       //   extensions: {
-  //       //     link: {
-  //       //       from: 'localFile',
-  //       //       by: 'url',
-  //       //     },
-  //       //   },
-  //       // },
-  //     },
-  //     interfaces: ['Node'],
-  //     extensions: {
-  //       infer: false,
-  //     },
-  //   }),
-  //   nodeAPIHelpers,
-  // );
+
   const imageType = schema.buildObjectType({
     name: 'CosmicjsImage',
     fields: {
