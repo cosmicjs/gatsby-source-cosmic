@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import mime from 'mime-types';
-import { fetchRemoteFile } from 'gatsby-core-utils';
+import { fetchRemoteFile } from 'gatsby-core-utils/dist/fetch-remote-file';
 import { md5 } from 'hash-wasm';
 
 // ---------
@@ -10,7 +10,7 @@ import { md5 } from 'hash-wasm';
 // Convert to Base64 w/Sharp: https://github.com/woltapp/blurhash/issues/43#issuecomment-759112713
 const fetchedBase64Images = {};
 const inProgressBase64Images = {};
-const getBase64Image = (imageURL, cache) => {
+const getBase64Image = (imageURL, { cache }) => {
   if (!imageURL) return null;
 
   // Require the image to be coming from cosmic's imgix cdn
@@ -47,6 +47,11 @@ const getBase64Image = (imageURL, cache) => {
     delete inProgressBase64Images[imageURL];
     return result;
   });
+};
+
+export {
+  fetchedBase64Images,
+  inProgressBase64Images,
 };
 
 export default getBase64Image;
