@@ -1,7 +1,8 @@
-import fs from 'fs';
+// import fs from 'fs';
+import { getGatsbyImageFieldConfig } from 'gatsby-plugin-image/graphql-utils';
+import resolveGatsbyImageData from './resolveGatsbyImageData';
 import { formatObjectTypes } from '../../helpers';
 import createSchemaObjectForType from './createSchemaObjectForType';
-import buildCosmicImageType from './buildCosmicImageType';
 
 const createSchemaCustomization = async (nodeAPIHelpers, options) => {
   const internalOptions = options;
@@ -22,16 +23,29 @@ const createSchemaCustomization = async (nodeAPIHelpers, options) => {
     return builtSchemas;
   });
 
-  const imageType = await buildCosmicImageType(nodeAPIHelpers);
+  const imageType = schema.buildObjectType({
+    name: 'CosmicjsImage',
+    fields: {
+      url: 'String!',
+      imgix_url: 'String!',
+      gatsbyImageData: getGatsbyImageFieldConfig(
+        async (...args) => resolveGatsbyImageData(...args, nodeAPIHelpers),
+        {
+          quality: 'Int',
+        },
+      ),
+    },
+    interfaces: [],
+  });
 
   typeDefs.push(imageType);
   createTypes(typeDefs);
 
-  // e file ./typeDefs.txt if it exists
-  if (fs.existsSync('./typeDefs.txt')) {
-    fs.unlinkSync('./typeDefs.txt');
-  }
-  actions.printTypeDefinitions({ path: './typeDefs.txt' });
+  // Leaving this here for now - it's useful for debugging the typeDefs
+  // if (fs.existsSync('./typeDefs.txt')) {
+  //   fs.unlinkSync('./typeDefs.txt');
+  // }
+  // actions.printTypeDefinitions({ path: './typeDefs.txt' });
 };
 
 export default createSchemaCustomization;
