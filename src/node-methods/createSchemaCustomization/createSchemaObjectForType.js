@@ -1,13 +1,12 @@
 /* eslint-disable camelcase */
-import _ from 'lodash';
 import {
   capitalizeFirstLetter,
   createNodeTypeSlug,
 } from '../../helpers';
 
-const getChildTypes = (fields, typeSlug, types = []) => {
+const getChildTypes = (fields, typeSlug) => {
   if (!Array.isArray(fields)) return [];
-  const typesArray = _.cloneDeep(types);
+  if (fields.length === 0) return [];
 
   const childTypeSchema = {
     name: typeSlug,
@@ -17,6 +16,7 @@ const getChildTypes = (fields, typeSlug, types = []) => {
     },
   };
 
+  let typesArray = [];
   typesArray.push(childTypeSchema);
 
   fields.forEach((field) => {
@@ -29,20 +29,23 @@ const getChildTypes = (fields, typeSlug, types = []) => {
         break;
       case 'parent':
         childTypeSchema.fields[key] = `${typeSlug}${capitalizeFirstLetter(key)}`;
-        subTypes = getChildTypes(field.children, `${typeSlug}${capitalizeFirstLetter(key)}`, typesArray);
+        subTypes = getChildTypes(field.children, `${typeSlug}${capitalizeFirstLetter(key)}`);
+        break;
+      case 'repeater':
+        childTypeSchema.fields[key] = `[${typeSlug}${capitalizeFirstLetter(key)}Items]`;
+        subTypes = getChildTypes(field.repeater_fields, `${typeSlug}${capitalizeFirstLetter(key)}Items`);
         break;
       default:
         break;
     }
 
-    typesArray.push(...subTypes);
+    typesArray = typesArray.concat(subTypes);
   });
 
   return typesArray;
 };
 
 const createSchemaObjectForType = (objectType) => {
-  console.log(JSON.stringify(objectType, null, 2));
   let types = [];
   const name = createNodeTypeSlug(objectType.slug);
 

@@ -1,3 +1,5 @@
+// TODO: Ensure all image options are correctly mapped.
+// TODO: Expose other imgix options.
 const generateImageSource = (baseURL, width, height, format, fit, options) => {
   const sourceObject = {};
   const query = {};
