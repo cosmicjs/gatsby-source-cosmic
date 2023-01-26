@@ -1,10 +1,12 @@
 /* eslint-disable camelcase */
 import _ from 'lodash';
 import {
+  capitalizeFirstLetter,
   createNodeTypeSlug,
 } from '../../helpers';
 
 const getChildTypes = (fields, typeSlug, types = []) => {
+  if (!Array.isArray(fields)) return [];
   const typesArray = _.cloneDeep(types);
 
   const childTypeSchema = {
@@ -19,20 +21,28 @@ const getChildTypes = (fields, typeSlug, types = []) => {
 
   fields.forEach((field) => {
     const { key, type } = field;
+    let subTypes = [];
 
     switch (type) {
       case 'file':
         childTypeSchema.fields[key] = 'CosmicjsImage';
         break;
+      case 'parent':
+        childTypeSchema.fields[key] = `${typeSlug}${capitalizeFirstLetter(key)}`;
+        subTypes = getChildTypes(field.children, `${typeSlug}${capitalizeFirstLetter(key)}`, typesArray);
+        break;
       default:
         break;
     }
+
+    typesArray.push(...subTypes);
   });
 
   return typesArray;
 };
 
 const createSchemaObjectForType = (objectType) => {
+  console.log(JSON.stringify(objectType, null, 2));
   let types = [];
   const name = createNodeTypeSlug(objectType.slug);
 

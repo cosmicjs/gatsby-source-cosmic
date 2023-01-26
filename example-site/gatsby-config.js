@@ -22,9 +22,9 @@ module.exports = {
           //   slug: 'pages',
           // },
           // 'authors',
-          // 'image-pages',
+          'image-pages',
           // 'every-types',
-          'dead-simple-image-pages',
+          // 'dead-simple-image-pages',
         ],
       }
     },
