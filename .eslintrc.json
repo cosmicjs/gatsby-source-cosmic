@@ -1,11 +1,11 @@
 {
+    "extends": "airbnb-base",
     "env": {
         "browser": true,
         "es2021": true,
         "jest/globals": true
     },
     "ignorePatterns": ["node_modules/*", "example-site/*", "/*.js", "dist/*"],
-    "extends": "airbnb-base",
     "plugins": ["jest"],
     "overrides": [
     ],
