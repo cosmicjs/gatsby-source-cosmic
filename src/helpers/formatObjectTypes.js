@@ -27,7 +27,7 @@ const formatObjectTypes = async (nodeAPIHelpers, options) => {
     return [];
   }
 
-  if (objectTypes.length === 0) {
+  if (!Array.isArray(objectTypes) || objectTypes.length === 0) {
     // If no object types were specified in the config, use the fetched object types.
     validObjectTypes.push(...fetchedTypeSlugs);
   } else {
