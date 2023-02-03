@@ -55,6 +55,30 @@ describe('formatObjectTypes', () => {
     ]);
   });
 
+  it('should return an array of valid object type configs when objectTypes is missing in the config', async () => {
+    const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockReturnValue([
+      { slug: 'test1' },
+      { slug: 'test2' },
+      { slug: 'test3' },
+    ]);
+
+    const objectTypes = await formatObjectTypes(
+      { reporter },
+      {
+        bucketSlug: 'test', readKey: 'test', objectTypes: [], limit: 100,
+      },
+    );
+
+    expect(mockFetchObjectTypes).toHaveBeenCalledTimes(1);
+    expect(reporter.warn).toHaveBeenCalledTimes(0);
+    expect(reporter.panic).toHaveBeenCalledTimes(0);
+    expect(objectTypes).toEqual([
+      { slug: 'test1', limit: 100 },
+      { slug: 'test2', limit: 100 },
+      { slug: 'test3', limit: 100 },
+    ]);
+  });
+
   it('should return an array of valid object type configs when mixed config types are specified', async () => {
     const mockFetchObjectTypes = jest.spyOn(FetchTypes, 'default').mockReturnValue([
       { slug: 'test1' },
