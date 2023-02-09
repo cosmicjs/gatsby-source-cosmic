@@ -68,7 +68,7 @@ Property | Required | Type | Default | Description
 `bucketSlug` | Required | String | n/a | The slug of the cosmic bucket that you want to pull data from. Best practice is to store this in an ENV variable using [dotenv](https://github.com/motdotla/dotenv).
 `readKey` | Required | String | n/a | The read key of the cosmic bucket that you want to pull data from. Best practice is to store this in an ENV variable using [dotenv](https://github.com/motdotla/dotenv). Access this read key in your bucket under `settings > api access`
 `limit` | Optional | Number | `500` | Controls the default number of objects that are fetched per request. This can be useful if you have especially large objects and are running into issue with the API timing out requests.
-`depth` | Optional | Number | n/a | Controls the default depth of the query into object relations. **Note**: This may be removed in an upgrade to the version 3 API
+`depth` | Optional | Number | `0` | Controls the default depth of the query into object relations.
 `use_cache` | Optional | Bool | `true` | A false value disables the use of the Cosmic API data cache. Please reference the docs [here](https://docs.cosmicjs.com/api-reference/objects#get-objects) for more information.
 `sort` | Optional | Enum (`created_at, -created_at, modified_at, -modified_at, random, order`) | `order` | The order that objects are fetched and inserted into the database. The default (order) allows you to control the order of items from the Cosmic UI.
 `status` | Optional| Enum (`published, any`) | `published` | The publish status of objects pulled from the API. Published will only pull published items while any will pull published & draft objects.
