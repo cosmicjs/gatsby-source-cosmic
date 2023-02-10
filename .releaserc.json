@@ -19,7 +19,6 @@
       "tarballDir": "tar"
     }],
     ["@semantic-release/github", {
-      "githubUrl": "https://github.com/cosmicjs/gatsby-source-cosmic.git",
       "assets": [{
         "name": "Tarball",
         "path": "tar/*.tgz"
