@@ -23,7 +23,7 @@
         "path": "tar/*.tgz"
         },
         {
-          "name": "Tarball",
+          "name": "Changelog",
           "path": "CHANGELOG.md"
         }]
     }]
