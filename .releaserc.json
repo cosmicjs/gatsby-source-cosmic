@@ -19,11 +19,11 @@
     }],
     ["@semantic-release/github", {
       "assets": [{
-        "name": "Tarball",
+        "name": "package.tgz",
         "path": "tar/*.tgz"
         },
         {
-          "name": "Changelog",
+          "name": "CHANGELOG.md",
           "path": "CHANGELOG.md"
         },
         {
