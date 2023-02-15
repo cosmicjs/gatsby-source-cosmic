@@ -25,6 +25,10 @@
         {
           "name": "Changelog",
           "path": "CHANGELOG.md"
+        },
+        {
+          "name": "README.md",
+          "path": "README.md"
         }]
     }]
   ]
