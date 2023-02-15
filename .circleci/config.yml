@@ -56,8 +56,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-deps-{{ checksum "package-lock.json" }}
             - v1-build-{{ .BuildNum }}-branch-{{ .Branch }}
+            - v1-deps-{{ checksum "package-lock.json" }}
       - run:
           name: "release"
           command: "npx semantic-release --debug"     
