@@ -46,7 +46,7 @@ jobs:
           name: "build"
           command: "npm run build"
       - save_cache:
-          key: v1-build-{{ .BuildNum }}-branch-{{ .Branch }}
+          key: v1-build-{{ .Environment.CIRCLE_WORKFLOW_ID }}-branch-{{ .Branch }}
           paths: 
             - dist
   release:
@@ -56,7 +56,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-build-{{ .BuildNum }}-branch-{{ .Branch }}
+            - v1-build-{{ .Environment.CIRCLE_WORKFLOW_ID }}-branch-{{ .Branch }}
             - v1-deps-{{ checksum "package-lock.json" }}
       - run:
           name: "release"
