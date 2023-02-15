@@ -25,10 +25,6 @@
         {
           "name": "Tarball",
           "path": "CHANGELOG.md"
-        },
-        {
-          "name": "Source Code",
-          "path": "src"
         }]
     }]
   ]
