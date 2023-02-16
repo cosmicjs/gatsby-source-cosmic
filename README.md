@@ -7,7 +7,7 @@ Source plugin for fetching data into [Gatsby](https://www.gatsbyjs.org) from [Co
 
 ### 1. Install the plugin
 ```
-npm install --save gatsby-source-cosmic
+npm install --save @cosmicjs/gatsby-source-cosmic
 ```
 
 ### 2. Configure your plugin
