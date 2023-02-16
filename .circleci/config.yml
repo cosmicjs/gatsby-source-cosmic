@@ -81,6 +81,7 @@ workflows:
             branches:
               only:
                 - main
+                - beta
                 - /.*-prerelease$/
                 - /v[0-9]+\.(x|[0-9]+)/
       - hold:
