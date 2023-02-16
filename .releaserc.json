@@ -4,6 +4,7 @@
     "main",
     {
       "name": "*-prerelease",
+      "channel": "beta",
       "prerelease": true
     }
   ],
@@ -14,7 +15,6 @@
       "changelogFile": "CHANGELOG.md"
     }],
     ["@semantic-release/npm", {
-      "npmPublish": false,
       "tarballDir": "tar"
     }],
     ["@semantic-release/github", {
