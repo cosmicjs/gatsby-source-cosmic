@@ -8,7 +8,7 @@ Most info here are things that I'm learning during research, but need to circle 
     - What does `panicOnBuild` do?
     - Should see what `activityTimer` does UI wise in the CLI
       - same with `createProgress`
-  - [ ] Reformat the file structure
+  - [x] Reformat the file structure
   - [ ] Look into if special support is needed for the markdown field type
     - https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark
     - Search markdown gatsby

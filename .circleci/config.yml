@@ -46,18 +46,17 @@ jobs:
           name: "build"
           command: "npm run build"
       - save_cache:
-          key: v1-build-{{ .BuildNum }}-branch-{{ .Branch }}
+          key: v1-build-{{ .Environment.CIRCLE_WORKFLOW_ID }}-branch-{{ .Branch }}
           paths: 
             - dist
+            - node_modules
   release:
     docker:
       - image: cimg/node:18.13.0
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "package-lock.json" }}
-            - v1-build-{{ .BuildNum }}-branch-{{ .Branch }}
+          key: v1-build-{{ .Environment.CIRCLE_WORKFLOW_ID }}-branch-{{ .Branch }}
       - run:
           name: "release"
           command: "npx semantic-release --debug"     
@@ -82,7 +81,8 @@ workflows:
             branches:
               only:
                 - main
-                - /-prerelease$/
+                - beta
+                - /.*-prerelease$/
                 - /v[0-9]+\.(x|[0-9]+)/
       - hold:
           type: approval
