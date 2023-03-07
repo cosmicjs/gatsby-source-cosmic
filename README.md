@@ -17,7 +17,7 @@ In your `gatsby-config.js` install the plugin:
 ```
 plugins: [
   {
-    resolve: `gatsby-source-cosmic`,
+    resolve: `@cosmicjs/gatsby-source-cosmic`,
     options: {
       bucketSlug: process.env.COSMIC_BUCKET_SLUG,
       readKey: process.env.COSMIC_READ_KEY,
@@ -39,6 +39,23 @@ options: {
 This will allow you to query your Cosmic content data from within Gatsby. For example if you have an object type called `Blog Post` a query might look something like this:
 ```
 // src/templates/blog-post.js
+
+export const query = graphql`
+  query {
+    allCosmicjsBlogPosts {
+      edges {
+        node {
+          content
+          title
+        }
+      }
+    }
+  }
+`
+```
+or filter to a specific post like this:
+```
+// src/pages/about.js
 
 export const query = graphql`
   query ($slug: String) {
@@ -140,10 +157,69 @@ plugins: [
 ],
 ```
 
-## How to use Gatsby Image
-> **Note**: `gatsby-image` plugin is a required peer dependency to use these features. 
+## Querying for Images
+> **Note**: `gatsby-plugin-image` (^2.25.0) is a required peer dependency to use these features. 
 
-TODO
+Image metadata fields create 3 different queryable fields in your graphql schema. Here's what those fields would look like in a query:
+```
+// src/pages/about.js
+
+export const query = graphql`
+  query ($slug: String) {
+    cosmicjsBlogPosts(slug: {eq: $slug}) {
+      edges {
+        node {
+          metadata {
+            image {
+              gatsbyImageData
+              imgix_url
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+`
+```
+### Image URLs
+The two image URL properties can be used directly just like any other image resource URLs. However the `imgix_url` property is served by Cosmic's imgix CDN. This URL can be queried with a variety of rendering parameters, please see the [imgix Rendering API](https://docs.imgix.com/apis/rendering) documentation for details.
+
+### Gatsby Image Data
+The `gatsbyImageData` property is attached to image metadata properties, and can be queried to produce an object that's directly usable with a `<GatsbyImage>` component. Here's an example using a static query:
+```
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+
+export default function Home() {
+  const data = useStaticQuery(graphql`
+    query {
+      cosmicjsImagePages(slug: {eq: "test-image-page"}) {
+        slug
+        metadata {
+          image_level_0 {
+            gatsbyImageData(
+              formats: JPG,
+              placeholder: DOMINANT_COLOR
+            )
+          }
+        }
+      }
+    }
+  `)
+
+  const image = getImage(data.cosmicjsImagePages.metadata.image_level_0.gatsbyImageData)
+
+  return (
+    <div>
+      <h1>Hello world!</h1>
+      <GatsbyImage image={image} alt="Test image" />
+    </div>
+  )
+}
+```
+For more details on how to query gatsby image data please see the [Gatsby Image plugin documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
 
 ## Starters
 TODO

@@ -5,7 +5,7 @@ const pluginOptionsSchema = ({ Joi }) => Joi.object({
     .description('Your Cosmic bucket slug.'),
   readKey: Joi.string().required().empty()
     .description('Your Cosmic API read key.'),
-  limit: Joi.number().default(500).integer().min(1)
+  limit: Joi.number().default(100).integer().min(1)
     .description('The number of objects to fetch per request.'),
   depth: Joi.number().optional().integer().min(0)
     .description('The depth of the object tree to fetch.'),
