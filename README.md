@@ -11,7 +11,7 @@ npm install --save @cosmicjs/gatsby-source-cosmic
 ```
 
 ### 2. Configure your plugin
-In order to configure this plugin you will need your Cosmic bucket slug & corresponding read key. You can find these by [logging into Cosmic](https://app.cosmicjs.com/login) and going to `Your Bucket > Settings > API Access`.
+In order to configure this plugin you will need your Cosmic Bucket slug & corresponding read key. You can find these by [logging into Cosmic](https://app.cosmicjs.com/login) and going to `Your Bucket > Settings > API Access`.
 
 In your `gatsby-config.js` install the plugin:
 ```
@@ -78,7 +78,7 @@ This plugin offers a number of other features to allow you to control what data 
 ### Global Config Options
 These options can be specified at the top level of your config.
 
-> **Note**: If a matching property is specified on the object level the Object level configuration value will be used.
+> **Note**: If a matching property is specified on the Object level the Object level configuration value will be used.
 
 Property | Required | Type | Default | Description
 --- | --- | --- | --- | ---
@@ -110,7 +110,7 @@ options: {
 
 Property | Required | Type | Description
 --- | --- | --- | ---
-`slug` | Required | String | The slug of the Object type for this config object.
+`slug` | Required | String | The slug of the Object type for this config Object.
 `query` | Optional | Object | The query for this Object. Learn more about Cosmic's query syntax in our [query documentation](https://docs.cosmicjs.com/api-reference/queries). **IMPORTANT**: Do not include the `type` property in your query. That is handled by the plugin and via the slug property.
 `props` | Optional | String | The properties of the Object that you want to be returned by the API. The properties should be formatted as a comma separated string. For example: `props: 'id,title,metadata.author'`. Please reference the [Cosmic API docs](https://docs.cosmicjs.com/api-reference/objects#get-objects) for more details. **Note**: When using this property the `id` prop must be included.
 `limit` | Optional | Number | Controls the default number of Objects that are fetched per request. This can be useful if you have especially large Objects and are running into issue with the API timing out requests.
