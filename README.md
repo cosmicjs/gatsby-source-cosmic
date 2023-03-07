@@ -84,7 +84,7 @@ Property | Required | Type | Default | Description
 --- | --- | --- | --- | ---
 `bucketSlug` | Required | String | n/a | The slug of the Cosmic Bucket that you want to pull data from. Best practice is to store this in an ENV variable using [dotenv](https://github.com/motdotla/dotenv).
 `readKey` | Required | String | n/a | The read key of the Cosmic Bucket that you want to pull data from. Best practice is to store this in an ENV variable using [dotenv](https://github.com/motdotla/dotenv). Access this read key in your Bucket under `Settings > API Access`
-`limit` | Optional | Number | `500` | Controls the default number of Objects that are fetched per request. This can be useful if you have especially large Objects and are running into issue with the API timing out requests.
+`limit` | Optional | Number | `100` | Controls the default number of Objects that are fetched per request. This can be useful if you have especially large Objects and are running into issue with the API timing out requests.
 `depth` | Optional | Number | `0` | Controls the default depth of the query into Object relations.
 `use_cache` | Optional | Bool | `true` | A false value disables the use of the Cosmic API data cache. Please reference the docs [here](https://docs.cosmicjs.com/api-reference/objects#get-objects) for more information.
 `sort` | Optional | Enum (`created_at, -created_at, modified_at, -modified_at, random, order`) | `order` | The order that Objects are fetched and inserted into the database. The default (order) allows you to control the order of items from the Cosmic UI.
