@@ -124,7 +124,7 @@ Property | Required | Type | Description
 ```
 plugins: [
   {
-    resolve: `gatsby-source-cosmic`,
+    resolve: `@cosmicjs/gatsby-source-cosmic`,
     options: {
       bucketSlug: process.env.COSMIC_BUCKET_SLUG,
       readKey: process.env.COSMIC_READ_KEY,
