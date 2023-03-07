@@ -11,7 +11,7 @@ npm install --save @cosmicjs/gatsby-source-cosmic
 ```
 
 ### 2. Configure your plugin
-In order to configure this plugin you will need your Cosmic Bucket slug & corresponding read key. You can find these by [logging into Cosmic](https://app.cosmicjs.com/login) and going to `Your Bucket > Settings > API Access`.
+In order to configure this plugin you will need your Cosmic Bucket slug and corresponding read key. You can find these by [logging into Cosmic](https://app.cosmicjs.com/login) and going to `Your Bucket > Settings > API Access`.
 
 In your `gatsby-config.js` install the plugin:
 ```
