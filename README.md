@@ -25,7 +25,7 @@ plugins: [
   },
 ],
 ```
-This configuration will automatically detect the object type in your bucket and pull down all published objects into your site's GraphQL database. If you'd like to only fetch a specific set of object types you can do that by specifying their slugs on the plugin config.
+This configuration will automatically detect the Object type in your Bucket and pull down all published Objects into your site's GraphQL database. If you'd like to only fetch a specific set of Object types you can do that by specifying their slugs on the plugin config.
 ```
 ...
 options: {
@@ -36,7 +36,7 @@ options: {
 ...
 ```
 
-This will allow you to query your Cosmic content data from within Gatsby. For example if you have an object type called `Blog Post` a query might look something like this:
+This will allow you to query your Cosmic content data from within Gatsby. For example if you have an Object type called `Blog Posts` a query might look something like this:
 ```
 // src/templates/blog-post.js
 
@@ -73,28 +73,28 @@ export const query = graphql`
 You can read more about querying data, template pages, and other queries in the [Gatsby Docs](https://www.gatsbyjs.com/docs/how-to/querying-data/).
 
 ## Advanced configuration
-This plugin offers a number of other features to allow you to control what data is fetched from your bucket.
+This plugin offers a number of other features to allow you to control what data is fetched from your Bucket.
 
 ### Global Config Options
 These options can be specified at the top level of your config.
 
-> **Note**: If a matching property is specified on the object level the object level configuration value will be used.
+> **Note**: If a matching property is specified on the object level the Object level configuration value will be used.
 
 Property | Required | Type | Default | Description
 --- | --- | --- | --- | ---
-`bucketSlug` | Required | String | n/a | The slug of the cosmic bucket that you want to pull data from. Best practice is to store this in an ENV variable using [dotenv](https://github.com/motdotla/dotenv).
-`readKey` | Required | String | n/a | The read key of the cosmic bucket that you want to pull data from. Best practice is to store this in an ENV variable using [dotenv](https://github.com/motdotla/dotenv). Access this read key in your bucket under `settings > api access`
-`limit` | Optional | Number | `500` | Controls the default number of objects that are fetched per request. This can be useful if you have especially large objects and are running into issue with the API timing out requests.
-`depth` | Optional | Number | `0` | Controls the default depth of the query into object relations.
+`bucketSlug` | Required | String | n/a | The slug of the Cosmic Bucket that you want to pull data from. Best practice is to store this in an ENV variable using [dotenv](https://github.com/motdotla/dotenv).
+`readKey` | Required | String | n/a | The read key of the Cosmic Bucket that you want to pull data from. Best practice is to store this in an ENV variable using [dotenv](https://github.com/motdotla/dotenv). Access this read key in your Bucket under `Settings > API Access`
+`limit` | Optional | Number | `500` | Controls the default number of Objects that are fetched per request. This can be useful if you have especially large Objects and are running into issue with the API timing out requests.
+`depth` | Optional | Number | `0` | Controls the default depth of the query into Object relations.
 `use_cache` | Optional | Bool | `true` | A false value disables the use of the Cosmic API data cache. Please reference the docs [here](https://docs.cosmicjs.com/api-reference/objects#get-objects) for more information.
-`sort` | Optional | Enum (`created_at, -created_at, modified_at, -modified_at, random, order`) | `order` | The order that objects are fetched and inserted into the database. The default (order) allows you to control the order of items from the Cosmic UI.
-`status` | Optional| Enum (`published, any`) | `published` | The publish status of objects pulled from the API. Published will only pull published items while any will pull published & draft objects.
-`objectTypes` | optional | [String \| Object] | n/a | An array of object types that you would like to pull from your Cosmic bucket. This can be an array of object  type slugs or object configs.
+`sort` | Optional | Enum (`created_at, -created_at, modified_at, -modified_at, random, order`) | `order` | The order that Objects are fetched and inserted into the database. The default (order) allows you to control the order of items from the Cosmic UI.
+`status` | Optional| Enum (`published, any`) | `published` | The publish status of Objects pulled from the API. Published will only pull published items while any will pull published & draft objects.
+`objectTypes` | optional | [String \| Object] | n/a | An array of Object types that you would like to pull from your Cosmic Bucket. This can be an array of Object type slugs or Object configs.
 
-### Object Type Config Options
-Object type config options allow you to more granularly configure how data is pulled from your Cosmic bucket. **Properties set on object types will override options set at the global config level.**
+### Object type config options
+Object type config options allow you to more granularly configure how data is pulled from your Cosmic Bucket. **Properties set on Object types will override options set at the global config level.**
 
-Object type configs can also be used with a combination of slug strings and objects. For example:
+Object type configs can also be used with a combination of slug strings and Objects. For example:
 ```
 options: {
   //...
@@ -110,14 +110,14 @@ options: {
 
 Property | Required | Type | Description
 --- | --- | --- | ---
-`slug` | Required | String | The slug of the object type for this config object.
-`query` | Optional | Object | The query for this object. Learn more about Cosmic's query syntax in our [query documentation](https://docs.cosmicjs.com/api-reference/queries). **IMPORTANT**: Do not include the `type` property in your query. That is handled by the plugin and via the slug property.
-`props` | Optional | String | The properties of the object that you want to be returned by the API. The properties should be formatted as a comma separated string. For example: `props: 'id,title,metadata.author'`. Please reference the [Cosmic API docs](https://docs.cosmicjs.com/api-reference/objects#get-objects) for more details. **Note**: When using this property the `id` prop must be included.
-`limit` | Optional | Number | Controls the default number of objects that are fetched per request. This can be useful if you have especially large objects and are running into issue with the API timing out requests.
-`depth` | Optional | Number | Controls the default depth of the query into object relations. **Note**: This may be removed in an upgrade to the version 3 API
+`slug` | Required | String | The slug of the Object type for this config object.
+`query` | Optional | Object | The query for this Object. Learn more about Cosmic's query syntax in our [query documentation](https://docs.cosmicjs.com/api-reference/queries). **IMPORTANT**: Do not include the `type` property in your query. That is handled by the plugin and via the slug property.
+`props` | Optional | String | The properties of the Object that you want to be returned by the API. The properties should be formatted as a comma separated string. For example: `props: 'id,title,metadata.author'`. Please reference the [Cosmic API docs](https://docs.cosmicjs.com/api-reference/objects#get-objects) for more details. **Note**: When using this property the `id` prop must be included.
+`limit` | Optional | Number | Controls the default number of Objects that are fetched per request. This can be useful if you have especially large Objects and are running into issue with the API timing out requests.
+`depth` | Optional | Number | Controls the default depth of the query into Object relations.
 `use_cache` | Optional | Bool | A false value disables the use of the Cosmic API data cache. Please reference the docs [here](https://docs.cosmicjs.com/api-reference/objects#get-objects) for more information.
-`sort` | Optional | Enum (`created_at, -created_at, modified_at, -modified_at, random, order`) | The order that objects are fetched and inserted into the database. The default (order) allows you to control the order of items from the Cosmic UI.
-`status` | Optional| Enum (`published, any`) | The publish status of objects pulled from the API. Published will only pull published items while any will pull published & draft objects.
+`sort` | Optional | Enum (`created_at, -created_at, modified_at, -modified_at, random, order`) | The order that Objects are fetched and inserted into the database. The default (order) allows you to control the order of items from the Cosmic UI.
+`status` | Optional| Enum (`published, any`) | The publish status of Objects pulled from the API. `published` will only pull published items while `any` will pull published & draft Objects.
 
 ### Full Object Config Example
 > Please note any values used here are just to demonstrate the properties usage.
@@ -160,7 +160,7 @@ plugins: [
 ## Querying for Images
 > **Note**: `gatsby-plugin-image` (^2.25.0) is a required peer dependency to use these features. 
 
-Image metadata fields create 3 different queryable fields in your graphql schema. Here's what those fields would look like in a query:
+Image `metadata` fields create 3 different queryable fields in your GraphQL schema. Here's what those fields would look like in a query:
 ```
 // src/pages/about.js
 
@@ -186,7 +186,7 @@ export const query = graphql`
 The two image URL properties can be used directly just like any other image resource URLs. However the `imgix_url` property is served by Cosmic's imgix CDN. This URL can be queried with a variety of rendering parameters, please see the [imgix Rendering API](https://docs.imgix.com/apis/rendering) documentation for details.
 
 ### Gatsby Image Data
-The `gatsbyImageData` property is attached to image metadata properties, and can be queried to produce an object that's directly usable with a `<GatsbyImage>` component. Here's an example using a static query:
+The `gatsbyImageData` property is attached to image metadata properties, and can be queried to produce an Object that's directly usable with a `<GatsbyImage>` component. Here's an example using a static query:
 ```
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
@@ -219,7 +219,7 @@ export default function Home() {
   )
 }
 ```
-For more details on how to query gatsby image data please see the [Gatsby Image plugin documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
+For more details on how to query Gatsby image data please see the [Gatsby Image plugin documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
 
 ## Starters
 TODO
