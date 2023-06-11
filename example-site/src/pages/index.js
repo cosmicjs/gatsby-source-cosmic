@@ -5,10 +5,12 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 export default function Home() {
   const data = useStaticQuery(graphql`
     query {
-      cosmicjsImagePages(slug: {eq: "test-image-page"}) {
+      cosmicjsPosts(slug: {eq: "exploring-the-worlds-natural-wonders"}) {
+        title
         slug
         metadata {
-          image_level_0 {
+          content
+          hero {
             gatsbyImageData(
               formats: JPG,
               placeholder: DOMINANT_COLOR
@@ -18,13 +20,12 @@ export default function Home() {
       }
     }
   `)
-
-  const image = getImage(data.cosmicjsImagePages.metadata.image_level_0.gatsbyImageData)
-
+  const title = data.cosmicjsPosts.title;
+  const image = getImage(data.cosmicjsPosts.metadata.hero.gatsbyImageData)
   return (
     <div>
-      <h1>Hello world!</h1>
-      <GatsbyImage image={image} alt="Test image" />
+      <h1>{title}</h1>
+      <GatsbyImage image={image} />
     </div>
   )
 }
