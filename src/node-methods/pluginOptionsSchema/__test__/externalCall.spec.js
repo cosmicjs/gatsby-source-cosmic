@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line no-unused-vars
-import { createBucketClient } from '@cosmicjs/sdk';
 import externalValidator from '../externalValidator';
 
-jest.mock('createBucketClient', () => () => ({
-  bucket: jest.fn(({ read_key }) => ({
-    objectTypes: read_key === 'fail' ? jest.fn().mockRejectedValue({ status: 401, message: 'Unauthorized' })
-      : jest.fn().mockResolvedValue({}),
+jest.mock('@cosmicjs/sdk', () => ({
+  createBucketClient: jest.fn(({ readKey }) => ({
+    objectTypes: {
+      find: readKey === 'fail' ? jest.fn().mockRejectedValue({ status: 401, message: 'Unauthorized' })
+        : jest.fn().mockResolvedValue({}),
+    },
   })),
 }));
 
