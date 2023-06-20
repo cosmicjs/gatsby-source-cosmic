@@ -1,8 +1,6 @@
-import Cosmic from 'cosmicjs';
+import { createBucketClient } from '@cosmicjs/sdk';
 import createTypeConfigs from './createTypeConfigs';
 import fetchObjectTypes from './fetchObjectTypes';
-
-const api = Cosmic();
 
 const formatObjectTypes = async (nodeAPIHelpers, options) => {
   const { reporter } = nodeAPIHelpers;
@@ -11,9 +9,9 @@ const formatObjectTypes = async (nodeAPIHelpers, options) => {
   const validObjectTypes = [];
   const fetchedTypeSlugs = [];
   const fetchedTypeMetafields = {};
-  const bucket = api.bucket({
-    slug: bucketSlug,
-    read_key: readKey,
+  const bucket = createBucketClient({
+    bucketSlug,
+    readKey,
   });
   try {
     const result = await fetchObjectTypes(nodeAPIHelpers, options, bucket);

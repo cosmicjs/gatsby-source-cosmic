@@ -22,7 +22,9 @@ describe('fetchObjectTypes', () => {
       bucketSlug: 'test',
     };
     const bucket = {
-      getObjectTypes: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      objectTypes: {
+        find: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      },
     };
 
     const result = await fetchObjectTypes(nodeAPIHelpers, options, bucket);
@@ -43,7 +45,9 @@ describe('fetchObjectTypes', () => {
       bucketSlug: 'test',
     };
     const bucket = {
-      getObjectTypes: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      objectTypes: {
+        find: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      },
     };
 
     const result = await fetchObjectTypes(nodeAPIHelpers, options, bucket);
@@ -65,7 +69,9 @@ describe('fetchObjectTypes', () => {
       bucketSlug: 'test',
     };
     const bucket = {
-      getObjectTypes: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      objectTypes: {
+        find: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      },
     };
 
     await fetchObjectTypes(nodeAPIHelpers, options, bucket);
@@ -86,7 +92,9 @@ describe('fetchObjectTypes', () => {
       bucketSlug: 'test',
     };
     const bucket = {
-      getObjectTypes: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      objectTypes: {
+        find: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      },
     };
 
     await fetchObjectTypes(nodeAPIHelpers, options, bucket);
@@ -113,7 +121,9 @@ describe('fetchObjectTypes', () => {
       bucketSlug: 'test',
     };
     const bucket = {
-      getObjectTypes: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      objectTypes: {
+        find: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      },
     };
 
     await fetchObjectTypes(nodeAPIHelpers, options, bucket);
@@ -137,7 +147,9 @@ describe('fetchObjectTypes', () => {
       bucketSlug: 'test',
     };
     const bucket = {
-      getObjectTypes: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      objectTypes: {
+        find: jest.fn().mockReturnValue({ object_types: [{ slug: 'posts' }, { slug: 'pages' }] }),
+      },
     };
 
     await fetchObjectTypes(nodeAPIHelpers, options, bucket);

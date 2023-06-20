@@ -10,7 +10,7 @@ const fetchObjectTypes = async (nodeAPIHelpers, options, bucket) => {
   }
 
   if (!Array.isArray(objectTypes)) {
-    const results = await bucket.getObjectTypes();
+    const results = await bucket.objectTypes.find();
     objectTypes = results.object_types;
     if (process.env.GATSBY_WORKER_ID) {
       await setCacheValue(nodeAPIHelpers, options, CacheSlug.forObjectTypes, objectTypes);

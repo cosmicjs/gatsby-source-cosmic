@@ -1,4 +1,4 @@
-import Cosmic from 'cosmicjs';
+import { createBucketClient } from '@cosmicjs/sdk';
 import async from 'async';
 import createCosmicFetch from './createCosmicFetch';
 import handleCosmicError from './handleCosmicError';
@@ -10,10 +10,9 @@ const fetchObjects = async (
     bucketSlug, readKey, objectTypes,
   },
 ) => {
-  const api = Cosmic();
-  const bucket = api.bucket({
-    slug: bucketSlug,
-    read_key: readKey,
+  const bucket = createBucketClient({
+    bucketSlug,
+    readKey,
   });
 
   const fetchedObjects = await async.mapSeries(
