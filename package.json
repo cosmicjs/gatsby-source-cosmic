@@ -1,6 +1,6 @@
 {
   "name": "@cosmicjs/gatsby-source-cosmic",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Gatsby Source Plugin for building websites using Cosmic as a data source",
   "main": "gatsby-node.js",
   "repository": {
